@@ -1,0 +1,16 @@
+body {
+    font-family: "Lato", sans-serif;
+  }
+  div > nav{
+    background-color: pink !important;
+  }
+  .footer{
+    background-color: pink !important;
+  }
+  
+  .nav-item:hover{
+    background-color: palevioletred ;
+  }
+  .nav-link{
+    color: black !important;
+  }
