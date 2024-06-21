@@ -1,38 +1,30 @@
-// 1. getElementById => trả lề HTML collection
-// 2. getElementsByClassName
-// 3. getElementsByTagName
-// 4. querySelector => trả lề HTML collection
-// 5. querySelectorAll => trả về noode list 
-// 6. HTML collection 
-// 7. document.write
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
 
-var inputElement = document.querySelector('input[type="text"]');
-inputElement.onkeydown = function (e){
-    console.log(e.target.value);
-}
+const tabs = $$(".tab-item");
+const panes = $$(".tab-pane");
 
-var inputElement = document.querySelector('input[type="checkbox"]');
-inputElement.onchange = function (e){
-    console.log(e.target.checked);
-}
+const tabActive = $(".tab-item.active");
+const line = $(".tabs .line");
 
-var inputElement = document.querySelector('select');
-inputElement.onchange = function (e){
-    console.log(e.target.value);
-}
-//Tạo kiểu class
+// SonDN fixed - Active size wrong size on first load.
+// Original post: https://www.facebook.com/groups/649972919142215/?multi_permalinks=1175881616551340
+requestIdleCallback(function () {
+  line.style.left = tabActive.offsetLeft + "px";
+  line.style.width = tabActive.offsetWidth + "px";
+});
 
-class Courses {
-    constructor (name, price){
-        this.name = name;
-        this.price = price;
-    }
-    getName() { return this.name; }
-    getPrice() { return this.price; }
-    setName(name) { this.name = name; }
-    setPrice(price) { this.price = price; }
-}
+tabs.forEach((tab, index) => {
+  const pane = panes[index];
 
-const phpCourse = new Courses("PHP Course", 500)
+  tab.onclick = function () {
+    $(".tab-item.active").classList.remove("active");
+    $(".tab-pane.active").classList.remove("active");
 
-console.log(phpCourse.name);
+    line.style.left = this.offsetLeft + "px";
+    line.style.width = this.offsetWidth + "px";
+
+    this.classList.add("active");
+    pane.classList.add("active");
+  };
+});
