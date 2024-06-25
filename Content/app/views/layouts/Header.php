@@ -13,4 +13,8 @@
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="../../../assets/javascript/index.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS"></script>
 </head>

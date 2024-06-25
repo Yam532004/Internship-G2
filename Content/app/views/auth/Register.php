@@ -29,6 +29,7 @@ $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
                                         <?php endif; ?>
 
                                         <form class="mx-1 mx-md-4" action="Home.php" method="post">
+
                                             <div class="d-flex flex-row align-items-center mb-4">
                                                 <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
@@ -39,7 +40,7 @@ $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
                                             <div class="d-flex flex-row align-items-center mb-4">
                                                 <i class="fas fa-phone fa-lg me-3 fa-fw"></i>
                                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                                                    <input name="phone_number" type="number" id="form3Example2c" class="form-control" min="1" required value="<?php echo isset($form_data['phone_number']) ? $form_data['phone _number'] : '' ?>" />
+                                                    <input name="phone_number" type="text" id="form3Example2c" class="form-control" min="1" required value="<?php echo isset($form_data['phone_number']) ? $form_data['phone_number'] : '' ?>" />
                                                     <label class="form-label" for="form3Example2c">Your Phone</label>
                                                 </div>
                                             </div>
@@ -68,9 +69,12 @@ $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
                                                 </div>
                                             </div>
 
+                                            <!-- <div class="g-recaptcha" data-sitekey="6LfT4QAqAAAAAF-pGLBTYYLHZr-CrwdaPbhGu8_b"></div> -->
+
                                             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg">Register</button>
+                                                <input type="submit" value="Post" class="btn btn-success btn-block" name="post">
                                             </div>
+                                            <input type="hidden" id="token" name="token">
                                         </form>
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
@@ -85,3 +89,13 @@ $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
         </section>
     </form>
 </div>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS', {
+            action: 'homepage'
+        }).then(function(token) {
+            console.log(token);
+            document.getElementById('token').value = token;
+        });
+    });
+</script>
