@@ -2,10 +2,10 @@ body {
     font-family: "Lato", sans-serif;
   }
   div > nav{
-    background-color: pink !important;
+    background-color:  pink ;
   }
   .footer{
-    background-color: pink !important;
+    background-color: pink ;
   }
   
   .nav-item:hover{
@@ -13,4 +13,7 @@ body {
   }
   .nav-link{
     color: black !important;
+  }
+  .bg-sidebar{
+    background-color: #50595C ;
   }
