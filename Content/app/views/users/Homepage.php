@@ -1,5 +1,14 @@
+<?php 
+session_start();
+// Kiểm tra và hiển thị thông báo nếu có
+if (isset($_SESSION['alert'])) {
+    echo $_SESSION['alert'];
+    unset($_SESSION['alert']); // Xóa thông báo sau khi đã hiển thị
+}
+?>
 <?php include "../layouts/Header.php" ?>
 <?php include "../layouts/Navbar.php" ?>
+
 <div class="container mt-2" id="content">
     <div class="row ">
         <div class="col-sm-6">

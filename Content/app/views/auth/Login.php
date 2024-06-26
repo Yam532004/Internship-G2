@@ -1,6 +1,14 @@
+<?php 
+session_start();
+// Kiểm tra và hiển thị thông báo nếu có
+if (isset($_SESSION['alert'])) {
+    echo $_SESSION['alert'];
+    unset($_SESSION['alert']); // Xóa thông báo sau khi đã hiển thị
+}
+?>
 <?php include '../layouts/Header.php' ?>
 <div class="container">
-    <form action="#" method="post" class="d-block">
+    <form action="../../controlers/loginController.php" method="post" class="d-block">
         <section class="vh-100" style="background-color: #eee;">
             <div class="container h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -11,7 +19,8 @@
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                                         <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign in</p>
 
-                                        <form class="mx-1 mx-md-4" action="../users/Homepage.php" method="post">
+                                        <form class="mx-1 mx-md-4" action="../../controlers/loginController.php" method="post">
+                                        <input type="hidden" id="token" name="token">
                                             <div class="d-flex flex-row align-items-center mb-4">
                                                 <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
@@ -35,9 +44,7 @@
                                                 </label>
                                             </div>
 
-                                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg">Register</button>
-                                            </div>
+                                            <input type="submit" value="Login" class=" btn btn-success d-flex float-right pl-5 pr-5" name="post">
                                         </form>
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">

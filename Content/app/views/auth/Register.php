@@ -1,6 +1,6 @@
 <?php
 include '../layouts/Header.php';
-// Tạo phiên để lưu trữ thông tin người dùng 
+// Tạo phiên để lưu trữ thông tin người dùng khi nhập lỗi 
 // .... để lưu trữ lỗi 
 // truy xuất lỗi và biểu mẫu từ phiên 
 session_start();
@@ -8,7 +8,7 @@ $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
 ?>
 <div class="container ">
-    <form action="Home.php" method="post" class="d-block">
+    <form action="../../controlers/registerController.php" method="post" class="d-block">
         <section style="background-color: #eee;">
             <div class="container  ">
                 <div class="row d-flex justify-content-center align-items-center  ">
@@ -27,9 +27,7 @@ $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
                                                 </ul>
                                             </div>
                                         <?php endif; ?>
-
-                                        <form class="mx-1 mx-md-4" action="Home.php" method="post">
-
+                                        <form class="mx-1 mx-md-4" action="../../controlers/registerController.php" method="post">
                                             <div class="d-flex flex-row align-items-center mb-4">
                                                 <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
@@ -70,10 +68,7 @@ $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
                                             </div>
 
                                             <!-- <div class="g-recaptcha" data-sitekey="6LfT4QAqAAAAAF-pGLBTYYLHZr-CrwdaPbhGu8_b"></div> -->
-
-                                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                <input type="submit" value="Post" class="btn btn-success btn-block" name="post">
-                                            </div>
+                                            <input type="submit" value="Register" class=" btn btn-success d-flex float-right pl-5 pr-5" name="post">
                                             <input type="hidden" id="token" name="token">
                                         </form>
                                     </div>
@@ -92,7 +87,7 @@ $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
 <script>
     grecaptcha.ready(function() {
         grecaptcha.execute('6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS', {
-            action: 'homepage'
+            action: 'Register'
         }).then(function(token) {
             console.log(token);
             document.getElementById('token').value = token;
