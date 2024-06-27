@@ -1,4 +1,3 @@
-//Tạo phương thức validate số điện thoại
 function validatePhone(value, element, param) {
   return /^[0-9]{10}$/.test(value);
 }

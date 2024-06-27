@@ -2,6 +2,7 @@
 // session_start();
 require '../../public/dbconnect.php';
 require '../../public/validate.php';
+
 function validateUserData($recaptcha_response)
 {
     $errors = [];

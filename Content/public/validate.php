@@ -1,18 +1,4 @@
-<?php
-// Kiểm tra định dạng số điện thoại
-function isValidPhoneNumber($phone_number)
-{
-    $pattern = '/^\+?\d{1,3}[-\s]?\d{9,}$/';
-    return preg_match($pattern, $phone_number);
-}
-
-// Kiểm tra mật khẩu theo tiêu chuẩn
-function isValidPassword($password)
-{
-    $regex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
-    return preg_match($regex, $password);
-}
-function verifyRecaptcha($recaptcha_response)
+<?php function verifyRecaptcha($recaptcha_response)
 {
     $errors = [];
 
@@ -41,6 +27,3 @@ function verifyRecaptcha($recaptcha_response)
 
     return $errors;
 }
-
-// Hàm xử lý và kiểm tra dữ liệu
-
