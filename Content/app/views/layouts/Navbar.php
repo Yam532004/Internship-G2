@@ -1,3 +1,6 @@
+<?php 
+require 'Header.php';
+?>
 <body>
     <div class="container-fluid">
         <div id="header">
@@ -47,16 +50,23 @@
                                 Contact</a>
                         </li>
                     </ul>
-
-                    <div class="d-flex">
+                    <!-- <div class="d-flex">
                         <button class="btn btn-primary m-1" type="button" onclick="window.location.href='../auth/Register.php'">Sign in</button>
                         <button class="btn btn-outline-danger m-1" type="button" onclick="window.location.href='../auth/Login.php'">Sign up</button>
-                    </div>
-                    <!-- <a class="navbar-brand" href="#">
-                        <img src="https://media.autoexpress.co.uk/image/private/s--vZkbi5D1--/f_auto,t_primary-image-mobile@1/v1685458010/autoexpress/2023/05/Porsche%20911%20GTS%20UK%20001_otx6j7.jpg"
-                            alt="Avatar Logo" style="width:40px;" class="rounded-pill">
-                    </a> -->
-                    <!-- <button class="btnSearch btn btn-danger">Light</button> -->
+                    </div> -->
+                
+                    <?php if (isset($_SESSION['token'])): ?>
+                        <div style="width:30%;" class="bg-info rounded-circle">
+                            <img src="avatar.png" alt="Avatar" class="avatar">
+                        </div>
+                    <?php else: ?>
+                        <div class="d-flex">
+                            <button class="btn btn-primary m-1 " type="button" onclick="window.location.href='../auth/Register.php'">Sign in</button>
+                            <button class="btn btn-outline-danger m-1" type="button" onclick="window.location.href='../auth/Login.php'">Sign up</button>
+                        </div>
+                        <!-- <?php print_r($_SESSION['token']) ?> -->
+                    <?php endif; ?>
+                    
                 </div>
             </nav>
         </div>
