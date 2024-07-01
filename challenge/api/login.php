@@ -95,11 +95,13 @@ if ($num > 0) {
         //     )
         // );
         // echo json_encode(array("message" => "User was successfully registered."));
+        $_SESSION['login_success'] = "User was successfully registered.";
         sleep(1);
         header('Location: ../views/homepage.php');
     } else {
         $_SESSION['error'] = "Incorrect password.";
+        $_SESSION['old_email'] = $email;
         http_response_code(401);
-        header('Location:../views/login.php');
+        header('Location: ../views/login.php');
     }
 }
