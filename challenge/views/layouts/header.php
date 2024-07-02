@@ -28,8 +28,9 @@
   <!-- MDB CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet" />
 
-  <!-- jQuery (Latest) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!-- MDB JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.js"></script>
+
 
   <!-- Bootstrap JS (Latest) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -44,12 +45,18 @@
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="https://www.google.com/recaptcha/api.js?render=6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS"></script>
 
-  <!-- jQuery Validation -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
-
   <!-- Custom JS -->
   <script src="../../../assets/javascript/index.js"></script>
 
   <!-- Font Awesome Icon Kit -->
   <script src="https://kit.fontawesome.com/b0fd760852.js" crossorigin="anonymous"></script>
+
+  <!-- jQuery (Mới nhất) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- jQuery Validation -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+
+<!-- Validate -->
+ <script src="../../assets/javascript/register.js"></script>
 </head>

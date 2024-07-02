@@ -25,6 +25,8 @@ div > nav {
 }
 .error {
   border-color: red; /* Đổi màu viền của các trường không hợp lệ thành màu đỏ */
+  color: red;
+  font-size: 11px;
 }
 span.error > label {
   color: red; /* Đổi màu chữ của thông báo lỗi thành màu đỏ */
@@ -112,4 +114,8 @@ input:checked + .slider:before {
 
 .btn.clear:hover {
   background-color: #c9302c;
+}
+.form-group > label{
+  color: #000;
+  margin-top: 0 !important;
 }
