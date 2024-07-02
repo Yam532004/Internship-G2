@@ -57,6 +57,4 @@
 <!-- jQuery Validation -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 
-<!-- Validate -->
- <script src="../../assets/javascript/register.js"></script>
 </head>

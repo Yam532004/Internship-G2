@@ -1,5 +1,6 @@
 <?php require '../layouts/header.php' ?>
 
+
 <body class="sidebar-mini" style="height: auto;">
   <div class="wrapper">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -195,19 +196,10 @@
       </div>
     </aside>
 
-    <?php include 'user-management.php' ?>
     <!-- Add manager user  -->
+    <?php include 'user-management.php' ?>
 
-  </div>
-  </div>
 
-  </div>
-
-  </div>
-
-  </section>
-
-  </div>
 
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
@@ -357,3 +349,8 @@
   <div id="sidebar-overlay"></div>
   </div>
 </body>
+<!-- jQuery Validation -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+
+<!-- Validate -->
+ <script src="../../assets/javascript/register.js"></script>

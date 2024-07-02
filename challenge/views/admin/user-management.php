@@ -49,7 +49,7 @@ include_once '../../config/dbconnect.php'
                                                 $conn = $databaseService->getConnection();
                                                 $query = $conn->query("SELECT * FROM users");
 
-                                                // Sử dụng fetchAll để lấy tất cả các hàng dữ liệu
+                                                // Loop through each user fetched from the database
                                                 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                                                     echo "<tr>";
                                                     echo "<td>" . htmlspecialchars($row['id']) . "</td>";
@@ -57,20 +57,80 @@ include_once '../../config/dbconnect.php'
                                                     echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['phone_number']) . "</td>";
                                                     echo "<td>
-                                                        <a href='#' class=''>Active</a>
-                                                    </td>";
-                                                    echo "<td class='text-center d-flex'>
-                                                    <div class='col-3'></div>";
-                                                    // Bao gồm tệp edit-user.php
-                                                    include 'edit-user.php';
-                                                    echo "<div class='col-1'></div>";
-                                                    // Bao gồm tệp delete-user.php
-                                                    include 'delete-user.php';
-                                                    echo "</td>";
+                <a href='#' class=''>Active</a>
+              </td>";
+
+                                                    // Edit user button with modal
+                                                    echo '<td class="text-center d-flex">
+                <div class="col-3"></div>
+                <button class="btn btn-sm btn-warning col-2 edit-user-btn" data-toggle="modal" data-target="#editUserModal' . $row['id'] . '"><i class="fa fa-pen-to-square"></i></button>
+                <form class="delete-form col-3" action="" method="POST">
+    <button type="button" class="btn btn-sm btn-danger " data-toggle="modal" data-target="#exampleModal"><i class="fa fa-trash status_btn"></i></button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content p-5">
+                Are you sure to delete user?<br /><br />
+                <div class="d-flex"><button type="button" class="btn clear mr-3">Yes</button> <button type="button" class="btn no-clear" data-dismiss="modal">No</button></div>
+            </div>
+        </div>
+    </div>
+</form>
+              </td>';
+
+
                                                     echo "</tr>";
+
+                                                    // Edit User Modal
+                                                    echo '<div class="modal fade" id="editUserModal' . $row['id'] . '" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content w-75">
+                        <div class="col-md-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title text-center">Edit user</h3>
+                                </div>';
+
+                                                    // Fetch user details based on the current row's ID
+                                                    $userId = $row['id'];
+                                                    $queryUser = $conn->prepare("SELECT * FROM users WHERE id = :id");
+                                                    $queryUser->bindParam(':id', $userId);
+                                                    $queryUser->execute();
+                                                    $user = $queryUser->fetch(PDO::FETCH_ASSOC);
+
+                                                    // Modal form to edit user details
+                                                    echo '<form>
+                <div class="card-body container">
+                    <div class="form-group">
+                        <p class="text-left">User name</p>
+                        <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" value="' . htmlspecialchars($user['username']) . '">
+                    </div>
+                    <div class="form-group">
+                        <p class="text-left">Phone number</p>
+                        <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter phone number" value="' . htmlspecialchars($user['phone_number']) . '">
+                    </div>
+                    <div class="form-group">
+                        <p class="text-left">Email address</p>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" value="' . htmlspecialchars($user['email']) . '">
+                    </div>
+                    <div class="form-group">
+                        <p class="text-left">Password</p>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="">
+                        <small class="form-text text-muted">Leave blank if you don\'t want to change the password.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="saveEdit btn btn-primary">Save changes</button>
+                </div>
+              </form>';
+
+                                                    echo '</div>
+            </div>
+          </div>
+        </div>';
                                                 }
                                                 ?>
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
@@ -83,6 +143,7 @@ include_once '../../config/dbconnect.php'
                 </div>
             </div>
         </div>
+    </section>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

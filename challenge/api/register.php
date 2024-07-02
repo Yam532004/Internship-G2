@@ -63,7 +63,7 @@ if ($stmt->execute()) {
     http_response_code(200);
     echo json_encode(array("message" => "User was successfully registered."));
     sleep(1);
-    // header('Location: ../views/login.php');
+    header('Location: ../views/admin/sidebar.php');
 } else {
     http_response_code(400);
     echo json_encode(array("message" => "Unable to register the user. "));

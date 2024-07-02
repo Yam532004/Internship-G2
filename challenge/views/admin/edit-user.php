@@ -1,6 +1,8 @@
+<?php include_once '../../config/database.php';
+include_once '../../config/dbconnect.php'
+?>
 <button class="btn btn-sm btn-warning col-2" data-toggle="modal" data-target="#staticBackdrop3"><i class="fa fa-pen-to-square ">
     </i></button>
-
 
 <div class="modal fade" id="staticBackdrop3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="false">
     <div class="modal-dialog">
@@ -10,33 +12,55 @@
                     <div class="card-header">
                         <h3 class="card-title text-center">Edit user</h3>
                     </div>
-                    <form >
-                        <div class="card-body container ">
+                    <?php
+                    if (isset($_GET['id'])) {
+                        $id = htmlspecialchars($_GET['id']);
+
+                        // Thực hiện kết nối CSDL và truy vấn để lấy thông tin người dùng
+                        $databaseService = new DatabaseService();
+                        $conn = $databaseService->getConnection();
+                        $query = $conn->prepare("SELECT * FROM users WHERE user_id = :id");
+                        $query->bindParam(':id', $id);
+                        $query->execute();
+                        $row = $query->fetch(PDO::FETCH_ASSOC);
+
+                        // Lấy thông tin từ kết quả truy vấn
+                        if ($row) {
+                            $username = $row['username'];
+                            $phone_number = $row['phone_number'];
+                            $email = $row['email'];
+                            // Không hiển thị mật khẩu trong form chỉnh sửa
+                            $password = ''; // hoặc có thể gán giá trị rỗng để người dùng không thay đổi mật khẩu
+                        }
+
+                        $conn = null; // Đóng kết nối CSDL sau khi hoàn thành
+                    }
+                    ?>
+                    <form>
+                        <div class="card-body container">
                             <div class="form-group">
                                 <p class="text-left">User name</p>
-                                <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
+                                <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>">
                             </div>
                             <div class="form-group">
                                 <p class="text-left">Phone number</p>
-                                <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter phone_number">
+                                <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter phone number" value="<?php echo isset($phone_number) ? htmlspecialchars($phone_number) : ''; ?>">
                             </div>
                             <div class="form-group">
-                                <p class="text-left">
-                                    Email address
-                                </p>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+                                <p class="text-left">Email address</p>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
                             </div>
                             <div class="form-group">
-                                <p class="text-left">
-                                    Password
-                                </p>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                                <p class="text-left">Password</p>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="">
+                                <small class="form-text text-muted">Leave blank if you don't want to change the password.</small>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="saveEdit btn btn-primary">Save changes</button>
                         </div>
                     </form>
+
                 </div>
 
             </div>

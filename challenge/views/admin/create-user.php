@@ -14,32 +14,32 @@
                         <div class="card-body container">
                             <input type="hidden" id="token" name="token">
                             <div class="form-group">
-                                <label class="text-right" for="username">User name</label>
-                                <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
-                                <span class="error text-right"></span>
+                                <p class="text-left" for="username">Full name </p>
+                                <input type="text" name="username" class="form-control" id="username" placeholder="Enter your name">
+                                <span class="error text-left"></span>
                             </div>
                             <div class="form-group">
-                                <label class="text-right" for="email">Email address</label>
+                                <p class="text-left" for="email">Email address</p>
                                 <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
                                 <span class="error"></span>
                             </div>
                             <div class="form-group">
-                                <label class="text-right" for="phone_number">Phone number</label>
+                                <p class="text-left" for="phone_number">Phone number</p>
                                 <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter phone number">
                                 <span class="error"></span>
                             </div>
                             <div class="form-group">
-                                <label class="text-right" for="password">Password</label>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                                <p class="text-left" for="password">Password</p>
+                                <input type="text" name="password" class="form-control" id="password" placeholder="Password">
                                 <span class="error"></span>
                             </div>
                             <div class="form-group">
-                                <label class="text-right" for="confirm_password">Confirm Password</label>
-                                <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm password">
+                                <p class="text-left" for="confirm_password">Confirm Password</p>
+                                <input type="text" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm password">
                                 <span class="error"></span>
                             </div>
+                            <button type="submit" class="saveEdit btn btn-primary">Create</button>
                             <div class="modal-footer">
-                                <button type="submit" class="saveEdit btn btn-primary">Create</button>
                             </div>
                         </div>
                     </form>
@@ -49,4 +49,3 @@
     </div>
 </div>
 </div>
-
