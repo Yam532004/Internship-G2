@@ -28,12 +28,6 @@ div > nav {
   color: red;
   font-size: 11px;
 }
-span.error > label {
-  color: red; /* Đổi màu chữ của thông báo lỗi thành màu đỏ */
-  font-size: 12px;
-  margin: 0%;
-}
-/* Lock-Unlock  */
 .switch {
   position: relative;
   display: inline-block;

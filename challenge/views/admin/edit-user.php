@@ -12,6 +12,7 @@ include_once '../../config/dbconnect.php'
                     <div class="card-header">
                         <h3 class="card-title text-center">Edit user</h3>
                     </div>
+
                     <?php
                     if (isset($_GET['id'])) {
                         $id = htmlspecialchars($_GET['id']);
@@ -36,35 +37,37 @@ include_once '../../config/dbconnect.php'
                         $conn = null; // Đóng kết nối CSDL sau khi hoàn thành
                     }
                     ?>
-                    <form>
+                    <form action="../../api/edit-user.php" id="myform" method="post">
                         <div class="card-body container">
+                            <input type="hidden" id="token" name="token">
                             <div class="form-group">
                                 <p class="text-left">User name</p>
-                                <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>">
+                                <input type="text" name="username" class="form-control" id="username" value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>">
+                                <span class="error text-left">Hello guy</span>
                             </div>
                             <div class="form-group">
                                 <p class="text-left">Phone number</p>
                                 <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter phone number" value="<?php echo isset($phone_number) ? htmlspecialchars($phone_number) : ''; ?>">
+                                <span class="error text-left"></span>
                             </div>
                             <div class="form-group">
                                 <p class="text-left">Email address</p>
                                 <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
+                                <span class="error text-left"></span>
                             </div>
                             <div class="form-group">
                                 <p class="text-left">Password</p>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="">
+                                <input type="text" name="password" class="form-control" id="password" placeholder="Password" value="<?php echo isset($password) ? password_needs_rehash($password, PASSWORD_DEFAULT) : ''; ?>">
+                                <span class="error text-left"></span>
                                 <small class="form-text text-muted">Leave blank if you don't want to change the password.</small>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-primary" onClick="console.log('helo guy ')">Save changes</button>
                         <div class="modal-footer">
-                            <button type="button" class="saveEdit btn btn-primary">Save changes</button>
                         </div>
                     </form>
-
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-</form>

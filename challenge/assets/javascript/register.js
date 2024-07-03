@@ -49,10 +49,10 @@ $(document).ready(function () {
       email: {
         required: true,
         checkEmail: true,
-        // remote: {
-        //   url: "check-email-for-register.php",
-        //   type: "post",
-        // }
+        remote: {
+          url: "check-email-for-register.php",
+          type: "post",
+        }
       },
 
       phone_number: {
@@ -80,7 +80,7 @@ $(document).ready(function () {
       email: {
         required: "We need your email address to contact you",
         checkEmail: "Please enter your email in the format yam532004@gmail.com",
-        // remote: "Email already in use!",
+        remote: "Email already in use!",
       },
       phone_number: {
         required: "Please provide your phone number",

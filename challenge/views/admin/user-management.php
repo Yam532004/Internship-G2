@@ -34,13 +34,13 @@ include_once '../../config/dbconnect.php'
                                     <div class="col-sm-12">
                                         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
                                             <thead>
-                                                <tr>
-                                                    <th class="sorting sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending">ID</th>
-                                                    <th class="sorting sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending">Name</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Email</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Phone</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Lock-Unlock</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                                                <tr class="">
+                                                    <th class="sorting fw-bold sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending">ID</th>
+                                                    <th class="sorting fw-bold sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending">Name</th>
+                                                    <th class="sorting fw-bold" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Email</th>
+                                                    <th class="sorting fw-bold" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Phone</th>
+                                                    <th class="sorting fw-bold" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Lock-Unlock</th>
+                                                    <th class="sorting fw-bold" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -63,14 +63,15 @@ include_once '../../config/dbconnect.php'
                                                     // Edit user button with modal
                                                     echo '<td class="text-center d-flex">
                 <div class="col-3"></div>
-                <button class="btn btn-sm btn-warning col-2 edit-user-btn" data-toggle="modal" data-target="#editUserModal' . $row['id'] . '"><i class="fa fa-pen-to-square"></i></button>
-                <form class="delete-form col-3" action="" method="POST">
-    <button type="button" class="btn btn-sm btn-danger " data-toggle="modal" data-target="#exampleModal"><i class="fa fa-trash status_btn"></i></button>
+                <button class="btn btn-sm btn-warning col-2 d-flex justify-content-center align-items-center" data-toggle="modal" data-target="#editUserModal' . $row['id'] . '"><i class="fa fa-pen-to-square "></i></button>
+                <form class="delete-form col-3" action="../../api/delete-user.php" method="post">
+    <button type="button" class="btn btn-sm btn-danger col-2 d-flex justify-content-center align-items-center " data-toggle="modal" data-target="#exampleModal"><i class="fa fa-trash status_btn"></i></button>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content p-5">
-                Are you sure to delete user?<br /><br />
-                <div class="d-flex"><button type="button" class="btn clear mr-3">Yes</button> <button type="button" class="btn no-clear" data-dismiss="modal">No</button></div>
+            Are you sure to delete user?<br /><br />
+            <input type="hidden" name="id" value="' . $row['id'] . '"
+                <div class="d-flex"><button type="submit" class="btn clear mr-3" id="btnDelete" >Yes</button> <button type="submit" class="btn no-clear" data-dismiss="modal">No</button></div>
             </div>
         </div>
     </div>
@@ -98,30 +99,32 @@ include_once '../../config/dbconnect.php'
                                                     $user = $queryUser->fetch(PDO::FETCH_ASSOC);
 
                                                     // Modal form to edit user details
-                                                    echo '<form>
-                <div class="card-body container">
-                    <div class="form-group">
-                        <p class="text-left">User name</p>
-                        <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" value="' . htmlspecialchars($user['username']) . '">
-                    </div>
-                    <div class="form-group">
-                        <p class="text-left">Phone number</p>
-                        <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter phone number" value="' . htmlspecialchars($user['phone_number']) . '">
-                    </div>
-                    <div class="form-group">
-                        <p class="text-left">Email address</p>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" value="' . htmlspecialchars($user['email']) . '">
-                    </div>
-                    <div class="form-group">
-                        <p class="text-left">Password</p>
-                        <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="">
-                        <small class="form-text text-muted">Leave blank if you don\'t want to change the password.</small>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="saveEdit btn btn-primary">Save changes</button>
-                </div>
-              </form>';
+                                                    echo '<form action="../../api/edit-user.php" id="myform" method="post">
+        <div class="card-body container">
+        <input type="hidden" id="token" name="token">
+        <input type="hidden" name="id" value="' . $row['id'] . '">
+            <div class="form-group">
+                <p class="text-left">User name</p>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" value="' . htmlspecialchars($user['username']) . '">
+                <span class="error text-left"></span>
+            </div>
+            <div class="form-group">
+                <p class="text-left">Phone number</p>
+                <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter phone number" value="' . htmlspecialchars($user['phone_number']) . '">
+                <span class="error text-left"></span>
+            </div>
+            <div class="form-group">
+                <p class="text-left">Email address</p>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" value="' . htmlspecialchars($user['email']) . '">
+                <span class="error text-left"></span>
+            </div>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="saveEdit btn btn-primary">Save changes</button>
+        </div>
+      </form>';
+
 
                                                     echo '</div>
             </div>
@@ -145,7 +148,9 @@ include_once '../../config/dbconnect.php'
         </div>
     </section>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

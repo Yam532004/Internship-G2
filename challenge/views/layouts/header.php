@@ -41,6 +41,12 @@
   <!-- Toastr JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
   <!-- Google reCAPTCHA -->
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="https://www.google.com/recaptcha/api.js?render=6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS"></script>
@@ -52,9 +58,12 @@
   <script src="https://kit.fontawesome.com/b0fd760852.js" crossorigin="anonymous"></script>
 
   <!-- jQuery (Mới nhất) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-<!-- jQuery Validation -->
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
+  <link rel="stylesheet" href="../../adminlte.min.css">
+  <link rel="stylesheet" href="../../adminlte.min.js">
 
 </head>
