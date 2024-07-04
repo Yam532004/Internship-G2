@@ -27,30 +27,52 @@ if (empty($data)) {
 }
 
 if (!isset($data['id']) || !isset($data['username']) || !isset($data['phone_number']) || !isset($data['email'])) {
-    echo json_encode(array("message" => "Miss some field (username, phone_number, email)."));
+    echo json_encode(array("message" => "Missing some fields (username, phone_number, email)."));
     exit;
 }
 
 $username = $data['username'];
 $phone_number = $data['phone_number'];
 $email = $data['email'];
+$password = $data['password'];
+$default_password = 'default_password';
 $id = $data['id'];
 
 $table_name = 'users';
 
+if ($password === $default_password) {
+    // Update without password
+    $query_non_update_password = "UPDATE " . $table_name . " SET username = :username, email = :email, phone_number = :phone_number WHERE id = :id";
+    
+    $stmt_non_update_password = $conn->prepare($query_non_update_password);
+    $stmt_non_update_password->bindParam(':username', $username);
+    $stmt_non_update_password->bindParam(':email', $email);
+    $stmt_non_update_password->bindParam(':phone_number', $phone_number);
+    $stmt_non_update_password->bindParam(':id', $id);
 
-$query = "UPDATE " . $table_name . "SET username = :username,email = :email,phone_number = :phone_number WHERE id = :id";
-
-$stmt = $conn->prepare($query);
-$stmt->bindParam(':username', $username);
-$stmt->bindParam(':email', $email);
-$stmt->bindParam(':phone_number', $phone_number);
-$stmt->bindParam(':id', $id);
-if ($stmt->execute()) {
-    $success_message = "User edit successfully.";
-    // Redirect to sidebar.php with success message
-    header('Location: ../views/admin/sidebar.php?message_edit=' . urlencode($success_message));
-    exit;
+    if ($stmt_non_update_password->execute()) {
+        $success_message = "User updated successfully.";
+        header('Location: ../views/admin/sidebar.php?message_edit=' . urlencode($success_message));
+    } else {
+        echo json_encode(array("error" => "Error updating user."));
+    }
 } else {
-    echo "Error updating user.";
+    // Update with password
+    $query_update_password = "UPDATE " . $table_name . " SET username = :username, email = :email, phone_number = :phone_number, password = :password WHERE id = :id";
+    
+    $stmt_update_password = $conn->prepare($query_update_password);
+    $stmt_update_password->bindParam(':username', $username);
+    $stmt_update_password->bindParam(':email', $email);
+    $stmt_update_password->bindParam(':phone_number', $phone_number);
+    $password_hash = password_hash($password, PASSWORD_BCRYPT);
+    $stmt_update_password->bindParam(':password', $password_hash);
+    $stmt_update_password->bindParam(':id', $id);
+
+    if ($stmt_update_password->execute()) {
+        $success_message = "User updated successfully.";
+        header('Location: ../views/sidebar.php?message_edit=' . urlencode($success_message));
+    } else {
+        echo json_encode(array("error" => "Error updating user."));
+    }
 }
+?>

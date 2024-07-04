@@ -1,4 +1,4 @@
-<?php require '../layouts/header.php' ?>
+<?php require 'layouts/header.php' ?>
 
 <body class="sidebar-mini" style="height: auto;">
   <div class="wrapper">
@@ -136,40 +136,6 @@
               </a></div>
           </div>
         </div>
-
-        <!-- <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                  Dashboard
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="../../index.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Dashboard v1</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="../../index2.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Dashboard v2</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="../../index3.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Dashboard v3</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </nav> -->
       </div>
     </aside>
     <!-- Add manager user  -->
@@ -329,7 +295,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
 <!-- Validate -->
-<script src="../../assets/javascript/register.js"></script>          
+<script type="text/javascript" src="../assets/javascript/register.js"></script>          
 
 <!-- Toastr -->
 <script>
@@ -345,6 +311,12 @@
     <?php endif; ?>
     <?php if (isset($_GET['message_create'])) : ?>
       toastr.success('Create successfully');
+    <?php endif; ?>
+    <?php if (isset($_GET['message_is_locked'])) : ?>
+      toastr.success('Account status updated successfully.');
+    <?php endif; ?>
+    <?php if (isset($_GET['message_login'])) : ?>
+      toastr.success('Login successfully.');
     <?php endif; ?>
   });
 </script>

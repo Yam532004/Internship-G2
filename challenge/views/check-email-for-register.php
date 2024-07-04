@@ -1,5 +1,6 @@
 <?php
 require '../config/dbconnect.php';
+
 $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
 
 $query = $conn->prepare("SELECT * FROM `users` WHERE email = :email");

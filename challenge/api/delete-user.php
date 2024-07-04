@@ -40,7 +40,7 @@ $stmt->bindParam(':id', $user_id);
 if ($stmt->execute()) {
     $success_message = "User deleted successfully.";
     // Redirect to sidebar.php with success message
-    header('Location: ../views/admin/sidebar.php?message_delete=' . urlencode($success_message));
+    header('Location: ../views/sidebar.php?message_delete=' . urlencode($success_message));
     exit;
 } else {
     echo "Error updating user.";

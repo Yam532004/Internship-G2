@@ -4,14 +4,13 @@
 <div class="modal fade" id="create-user" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
             <div class="modal-header">
                 <h4 class="modal-title">Create</h4>
                 <button type="button" class="close " data-dismiss="modal" aria-label="Close">
                     <span class="float-right" aria-hidden="true">×</span>
                 </button>
             </div>
-            <form action="../../api/register.php" id="myform" method="post">
+            <form action="../api/register.php" id="myform" method="post">
                 <div class="modal-body">
                     <div class="card-body container">
                         <input type="hidden" id="token" name="token">

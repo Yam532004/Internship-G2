@@ -61,14 +61,12 @@
   padding: 50px 35px;
 }
 form * {
-  font-family: "Poppins", sans-serif;
-  color: #ffffff;
   letter-spacing: 0.5px;
   outline: none;
   border: none;
 }
 form h3 {
-    color: #ffffff;
+    /* color: #ffffff; */
   font-size: 32px;
   font-weight: 500;
   line-height: 42px;
@@ -122,5 +120,6 @@ button {
 .social i {
   margin-right: 4px;
 }
+
 
 
