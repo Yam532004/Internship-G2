@@ -62,7 +62,7 @@ $stmt->bindParam(':password', $password_hash);
 if ($stmt->execute()) {
     $success_message = "User create successfully.";
     // Redirect to sidebar.php with success message
-    header('Location: ../views/admin/sidebar.php?message_create=' . urlencode($success_message));
+    header('Location: ../views/sidebar.php?message_create=' . urlencode($success_message));
     exit;
 } else {
     http_response_code(400);

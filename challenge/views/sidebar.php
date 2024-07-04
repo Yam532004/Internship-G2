@@ -1,6 +1,9 @@
 <?php require 'layouts/header.php' ?>
 
-<body class="sidebar-mini" style="height: auto;">
+<div class="container-fluild">
+  <div class="row">
+    <div class="col-lg">
+    <div class="sidebar-mini">
   <div class="wrapper">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <ul class="navbar-nav">
@@ -15,7 +18,7 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto mr-5">
-      
+
 
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
@@ -288,14 +291,17 @@
 
     <div id="sidebar-overlay"></div>
   </div>
-</body>
+</div>
+    </div>
+  </div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
 <!-- Validate -->
-<script type="text/javascript" src="../assets/javascript/register.js"></script>          
+<script type="text/javascript" src="../assets/javascript/register.js"></script>
 
 <!-- Toastr -->
 <script>

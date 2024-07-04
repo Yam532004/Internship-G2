@@ -52,7 +52,7 @@ if ($password === $default_password) {
 
     if ($stmt_non_update_password->execute()) {
         $success_message = "User updated successfully.";
-        header('Location: ../views/admin/sidebar.php?message_edit=' . urlencode($success_message));
+        header('Location: ../views/sidebar.php?message_edit=' . urlencode($success_message));
     } else {
         echo json_encode(array("error" => "Error updating user."));
     }

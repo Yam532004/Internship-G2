@@ -7,31 +7,33 @@ include 'layouts/header.php'
         <div class="shape"></div>
     </div>
     <form id="myform" class="form" action="../api/register.php" method="post">
-        <h3>SignUp</h3>
+        <h3 style="color:aliceblue">SignUp</h3>
         <input type="hidden" id="token" name="token">
-        <div><label for="username">Name</label>
-            <input type="text" name="username" id="username" placeholder="Input your name *" />
-            <span class="error"></span>
-        </div>
-
-        <div><label for="email">Email</label>
-            <input type="text" name="email" id="email" placeholder="Input your email *" />
+        <div>
+            <p style="color:aliceblue" for="username">Name</p>
+            <input style="color:aliceblue" type="text" name="username" id="username" placeholder="Input your name *" />
             <span class="error"></span>
         </div>
 
         <div>
-            <label for="phone_number">Phone Number</label>
-            <input type="text" name="phone_number" id="phone_number" placeholder="Input your phone number *" />
+            <p style="color:aliceblue" for="email">Email</p>
+            <input style="color:aliceblue" type="text" name="email" id="email" placeholder="Input your email *" />
+            <span class="error"></span>
+        </div>
+
+        <div>
+            <p style="color:aliceblue" for="phone_number">Phone Number</p>
+            <input style="color:aliceblue" type="text" name="phone_number" id="phone_number" placeholder="Input your phone number *" />
             <span class="error"></span>
         </div>
         <div>
-            <label for="password">Password</label>
-            <input name="password" id="password" placeholder="Input your password *" />
+            <p style="color:aliceblue" for="password">Password</p>
+            <input style="color:aliceblue" name="password" id="password" placeholder="Input your password *" />
             <span class="error"></span>
         </div>
         <div class="mb-3">
-            <label for="confirm_password">Confirm Password</label>
-            <input name="confirm_password" id="confirm_password" placeholder="Input your confirm password *" />
+            <p style="color:aliceblue" for="confirm_password">Confirm Password</p>
+            <input style="color:aliceblue" name="confirm_password" id="confirm_password" placeholder="Input your confirm password *" />
             <span class="error mb-5"></span>
         </div>
         <button type="submit">Submit</button>
