@@ -1,5 +1,6 @@
 <?php
 include_once '../config/database.php';
+session_start();
 header("Access-Control-Allow-Origin: * ");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -18,9 +19,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([$isLocked, $id]);
 
     if ($stmt->rowCount() > 0) { 
-        $success_message = "Account status updated successfully.";
-        header('Location: ../views/sidebar.php?message_is_locked=' . urlencode($success_message));
+        $_SESSION['message_is_locked'] = "Account status updated successfully.";
+        $page = "../views/sidebar.php";
+        header("Refresh:0; url=$page");
+        // header('Location: ../views/sidebar.php');
+        exit;
     } else {
-        echo "Account not found or status not changed.";
+       $_SESSION['error'] = "Account not found or status not changed.";
+       $page = "../views/sidebar.php";
+        header("Refresh:0; url=$page");
+       exit;
     }
 }

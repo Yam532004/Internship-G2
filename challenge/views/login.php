@@ -34,14 +34,46 @@ unset($_SESSION['error']);
     </form>
 </div>
 <script type="text/javascript" src="../assets/javascript/login.js"></script>
+
 <script>
-    $(document).ready(function() {
-        toastr.options.timeOut = 1500;
-        <?php if (isset($_GET['message_is_locked'])) : ?>
-            toastr.success('Account has been locked. Please change another account');
-        <?php endif; ?>
-        <?php if (isset($_GET['message_login'])) : ?>
-            toastr.success('Login fail');
-        <?php endif; ?>
-    })
+  $(document).ready(function() {
+    // Set toastr options
+    toastr.options.timeOut = 1500; // 1.5s
+    // Check if there's a success message passed from PHP
+    <?php if (isset($_SESSION['create_success'])) : ?>
+      toastr.success('<?php echo $_SESSION['create_success'] ?>');
+      <?php unset($_SESSION['create_success']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['create_fail'])) : ?>
+      toastr.success('<?php echo $_SESSION['create_fail'] ?>');
+      <?php unset($_SESSION['create_fail']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['message_is_locked'])) : ?>
+      toastr.success('<?php echo $_SESSION['message_is_locked'] ?>');
+      <?php unset($_SESSION['message_is_locked']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['login_success'])) : ?>
+      toastr.success('<?php echo $_SESSION['login_success'] ?>');
+      <?php unset($_SESSION['login_success']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])) : ?>
+      toastr.error('<?php echo $_SESSION['error'] ?>');
+      <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['delete_success'])) : ?>
+      toastr.success('<?php echo $_SESSION['delete_success'] ?>');
+      <?php unset($_SESSION['delete_success']); ?>
+    <?php endif; ?>
+
+
+    <?php if (isset($_SESSION['edit_success'])) : ?>
+      toastr.success('<?php echo $_SESSION['edit_success'] ?>');
+      <?php unset($_SESSION['edit_success']); ?>
+    <?php endif; ?>
+  });
 </script>

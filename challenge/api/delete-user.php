@@ -1,5 +1,6 @@
 <?php
 include_once '../config/database.php';
+session_start();
 header("Access-Control-Allow-Origin: * ");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -38,10 +39,10 @@ $query = "DELETE FROM " . $table_name . " WHERE id = :id";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':id', $user_id);
 if ($stmt->execute()) {
-    $success_message = "User deleted successfully.";
+    $_SESSION['delete_success'] = "User deleted successfully.";
     // Redirect to sidebar.php with success message
-    header('Location: ../views/sidebar.php?message_delete=' . urlencode($success_message));
+    header('Location: ../views/sidebar.php');
     exit;
 } else {
-    echo "Error updating user.";
+    $_SESSION['error'] = "Error updating user.";
 }

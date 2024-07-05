@@ -66,9 +66,9 @@ if ($num > 0) {
     $password2 = $row['password'];
 
     if ($is_locked) {
-        $message_is_locked = "The account has been locked";
+        $_SESSION['message_is_locked'] = "The account has been locked";
         $_SESSION['old_email'] = $email;
-        header('Location: ../views/login.php?message_is_locked=' . urlencode($message_is_locked));
+        header('Location: ../views/login.php');
         exit();
     } else if (password_verify($password, $password2)) {
         $secret_key = "6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS";
@@ -94,20 +94,16 @@ if ($num > 0) {
 
         $jwt = JWT::encode($token, $secret_key, 'HS256');
         $_SESSION['login_success'] = "User was successfully registered.";
-        $message_is_locked = "User create successfully.";
         // Redirect to sidebar.php with success message
-        header('Location: ../views/sidebar.php?message_login=' . urlencode($message_is_locked));
+        header('Location: ../views/sidebar.php');
     } else {
         $_SESSION['error'] = "Incorrect password.";
         $_SESSION['old_email'] = $email;
-        $message_is_locked = "Incorrect password";
-        header('Location: ../views/login.php?message_login=' . urlencode($message_is_locked));
+        header('Location: ../views/login.php');
         exit();
     }
 } else {
     $_SESSION['error'] = "Email not found.";
-    http_response_code(404);
-    $message_is_locked = "Email not found";
-    header('Location: ../views/login.php?message_login=' . urlencode($message_is_locked));
+    header('Location: ../views/login.php');
     exit();
 }

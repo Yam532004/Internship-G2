@@ -1,6 +1,7 @@
 <?php
 include_once '../config/database.php';
 
+session_start();
 header("Access-Control-Allow-Origin: * ");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -60,11 +61,13 @@ $stmt->bindParam(':phone_number', $phone_number);
 $password_hash = password_hash($password, PASSWORD_BCRYPT);
 $stmt->bindParam(':password', $password_hash);
 if ($stmt->execute()) {
-    $success_message = "User create successfully.";
-    // Redirect to sidebar.php with success message
-    header('Location: ../views/sidebar.php?message_create=' . urlencode($success_message));
+    $_SESSION['create_success'] = "User create successfully.";
+    header('Location: ../views/sidebar.php');
     exit;
 } else {
-    http_response_code(400);
-    echo json_encode(array("message" => "Unable to register the user. "));
+    // http_response_code(400);
+    // echo json_encode(array("message" => "Unable to register the user. "));
+    $_SESSION['create_fail'] = "User create failed.";
+    // header('Location: ../views/sidebar.php');
+    exit;
 }

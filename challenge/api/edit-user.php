@@ -1,5 +1,6 @@
 <?php
 include_once '../config/database.php';
+session_start();
 header("Access-Control-Allow-Origin: * ");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -51,10 +52,10 @@ if ($password === $default_password) {
     $stmt_non_update_password->bindParam(':id', $id);
 
     if ($stmt_non_update_password->execute()) {
-        $success_message = "User updated successfully.";
-        header('Location: ../views/sidebar.php?message_edit=' . urlencode($success_message));
+        $_SESSION['edit_success'] = "User updated successfully.";
+        header('Location: ../views/sidebar.php');
     } else {
-        echo json_encode(array("error" => "Error updating user."));
+        $_SESSION['error'] = "Error updating user.";
     }
 } else {
     // Update with password
@@ -69,10 +70,10 @@ if ($password === $default_password) {
     $stmt_update_password->bindParam(':id', $id);
 
     if ($stmt_update_password->execute()) {
-        $success_message = "User updated successfully.";
-        header('Location: ../views/sidebar.php?message_edit=' . urlencode($success_message));
+        $_SESSION['edit_success'] = "User updated successfully.";
+        header('Location: ../views/sidebar.php');
     } else {
-        echo json_encode(array("error" => "Error updating user."));
+        $_SESSION['error'] = "Error updating user.";
     }
 }
 ?>

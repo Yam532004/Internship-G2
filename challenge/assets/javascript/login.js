@@ -1,27 +1,25 @@
 $(document).ready(function () {
   //Tạo phương thức validate email
-  function validateEmail(value, element, param) {
-    return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      value
+  //Tạo phương thức validate email
+  $.validator.methods.checkEmail = function (value, element) {
+    return (
+      this.optional(element) ||
+      (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        value
+      ) &&
+        value.toLowerCase().endsWith("@gmail.com"))
     );
-  }
-  jQuery.validator.addMethod(
-    "checkEmail",
-    validateEmail,
-    "Please enter a valid email address"
-  );
+  };
 
   //Tạo phương thức validate password
-  function validatePassword(value, element, param) {
-    return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-      value
+  $.validator.methods.checkPassword = function (value, element) {
+    return (
+      this.optional(element) ||
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/.test(
+        value
+      )
     );
-  }
-  jQuery.validator.addMethod(
-    "checkPassword",
-    validatePassword,
-    "Please enter a valid password"
-  );
+  };
   $("#myform").validate({
     rules: {
       email: {
