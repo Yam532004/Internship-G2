@@ -12,22 +12,41 @@ $conn = $databaseService->getConnection();
 
 $table_name = "users";
 
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     $id = $_POST['id'];
+//     $isLocked = isset($_POST['is_locked']) ? 1 : 0;
+//     $stmt = $conn->prepare("UPDATE users SET is_locked = ? WHERE id = ?");
+//     $stmt->execute([$isLocked, $id]);
+
+//     if ($stmt->rowCount() > 0) {
+//         $_SESSION['message_is_locked'] = "Account status updated successfully.";
+//         $page = "../views/sidebar.php";
+//         header("Refresh:0; url=$page");
+//         // header('Location: ../views/sidebar.php');
+//         exit;
+//     } else {
+//         $_SESSION['error'] = "Account not found or status not changed.";
+//         $page = "../views/sidebar.php";
+//         header("Refresh:0; url=$page");
+//         exit;
+//     }
+// }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $isLocked = isset($_POST['is_locked']) ? 1 : 0;
     $stmt = $conn->prepare("UPDATE users SET is_locked = ? WHERE id = ?");
     $stmt->execute([$isLocked, $id]);
 
-    if ($stmt->rowCount() > 0) { 
-        $_SESSION['message_is_locked'] = "Account status updated successfully.";
-        $page = "../views/sidebar.php";
-        header("Refresh:0; url=$page");
-        // header('Location: ../views/sidebar.php');
-        exit;
+    $response = [];
+    if ($stmt->rowCount() > 0) {
+        $response['status'] = 'success';
+        $response['message'] = 'Account status updated successfully.';
     } else {
-       $_SESSION['error'] = "Account not found or status not changed.";
-       $page = "../views/sidebar.php";
-        header("Refresh:0; url=$page");
-       exit;
+        $response['status'] = 'error';
+        $response['message'] = 'Account not found or status not changed.';
     }
+    
+    echo json_encode($response);
+    exit;
 }

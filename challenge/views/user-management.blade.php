@@ -57,17 +57,26 @@ include_once '../config/dbconnect.php'
                                                         echo "<td>" . htmlspecialchars($row['username']) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row['phone_number']) . "</td>";
+                                                        echo '<td>
+    
+
+                                                         <form id="lockForm' . $row['id'] . '">
+                                                                 <div class="form-check form-switch d-flex justify-content-center text-center">
+                                                                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked' . $row['id'] . '" name="is_locked" value="1" ' . ($row['is_locked'] ? 'checked' : '') . ' onchange="submitLockForm(' . $row['id'] . ', ' . ($row['is_locked'] ? 'true' : 'false') . ')">
+                                                                     <input type="hidden" name="id" value="' . $row['id'] . '" />
+                                                                 </div>
+                                                             </form>
+                                                        </td>';
+                                                        // <form method="post" action="../api/is_locked.php" id="lockForm' . $row['id'] . '">
+                                                        //         <div class="form-check form-switch d-flex justify-content-center text-center">
+                                                        //            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked' . $row['id'] . '" name="is_locked" value="1" ' . ($row['is_locked'] ? 'checked' : '') . ' onchange="document.getElementById(\'lockForm' . $row['id'] . '\').submit();">
+                                                        //            <input type="hidden" name="id" value="' . $row['id'] . '" />
+                                                        //        </div>
+                                                        //    </form>
+                                                        
+
                                                         echo
-                                                        '<td>
-    <form method="post" action="../api/is_locked.php" id="lockForm' . $row['id'] . '">
-        <div class="form-check form-switch d-flex justify-content-center text-center">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked' . $row['id'] . '" name="is_locked" value="1" ' . ($row['is_locked'] ? 'checked' : '') . ' onchange="document.getElementById(\'lockForm' . $row['id'] . '\').submit();">
-            <input type="hidden" name="id" value="' . $row['id'] . '" />
-        </div>
-    </form>
-</td>';
-echo
-'<td class="text-center d-flex">
+                                                        '<td class="text-center d-flex">
     <div class="col-3"></div>
 
     <button type="button" onclick="editModal(' . $row['id'] . ', \'api/get-user.php?id=' . $row['id'] . '\', \'api/edit-user.php\')" title="Edit user" class="btn btn-sm btn-warning col-2 d-flex justify-content-center align-items-center"
@@ -79,7 +88,8 @@ echo
     <i class="fa fa-trash status_btn"></i>
     </button>
 </td>';
-echo "</tr>";}?>
+                                                        echo "</tr>";
+                                                    } ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -125,6 +135,30 @@ echo "</tr>";}?>
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching user data:', error);
+            }
+        });
+    }
+
+    function submitLockForm(id, isLocked) {
+        $.ajax({
+            url: '../api/is_locked.php',
+            method: 'POST',
+            data: {
+                id: id,
+                is_locked: isLocked ? 0 : 1 
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    console.log(response.message);
+                    // Xử lý thành công, có thể cập nhật UI hoặc hiển thị thông báo
+                } else {
+                    console.error(response.message);
+                    // Xử lý lỗi, có thể hiển thị thông báo lỗi
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error submitting form:', error);
             }
         });
     }

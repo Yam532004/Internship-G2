@@ -40,7 +40,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="edit_password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="edit_password" placeholder="Enter password">
+                                    <input type="text" name="password" class="form-control" id="edit_password" placeholder="Enter password">
                                     <span class="error text-left"></span>
                                 </div>
                             </div>
