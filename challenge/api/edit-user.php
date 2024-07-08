@@ -33,33 +33,38 @@ if (!isset($data['id']) || !isset($data['username']) || !isset($data['phone_numb
 }
 
 $username = $data['username'];
-$phone_number = $data['phone_number'];
+$phone_number =  $data['phone_number'];
 $email = $data['email'];
-$password = $data['password'];
+$password = isset($data['password']) ? $data['password'] : 'default_password'; // Ensure password is set
 $default_password = 'default_password';
 $id = $data['id'];
+$updated_at = date('Y-m-d H:i:s');
 
 $table_name = 'users';
 
 if ($password === $default_password) {
     // Update without password
-    $query_non_update_password = "UPDATE " . $table_name . " SET username = :username, email = :email, phone_number = :phone_number WHERE id = :id";
+    $query_non_update_password = "UPDATE " . $table_name . " SET username = :username, email = :email, phone_number = :phone_number, updated_at = :updated_at WHERE id = :id";
     
     $stmt_non_update_password = $conn->prepare($query_non_update_password);
     $stmt_non_update_password->bindParam(':username', $username);
     $stmt_non_update_password->bindParam(':email', $email);
     $stmt_non_update_password->bindParam(':phone_number', $phone_number);
     $stmt_non_update_password->bindParam(':id', $id);
+    $stmt_non_update_password->bindParam(':updated_at', $updated_at);
 
     if ($stmt_non_update_password->execute()) {
         $_SESSION['edit_success'] = "User updated successfully.";
         header('Location: ../views/sidebar.php');
+        exit;
     } else {
         $_SESSION['error'] = "Error updating user.";
+        header('Location: ../views/sidebar.php');
+        exit;
     }
 } else {
     // Update with password
-    $query_update_password = "UPDATE " . $table_name . " SET username = :username, email = :email, phone_number = :phone_number, password = :password WHERE id = :id";
+    $query_update_password = "UPDATE " . $table_name . " SET username = :username, email = :email, phone_number = :phone_number, password = :password, updated_at = :updated_at WHERE id = :id";
     
     $stmt_update_password = $conn->prepare($query_update_password);
     $stmt_update_password->bindParam(':username', $username);
@@ -68,12 +73,16 @@ if ($password === $default_password) {
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
     $stmt_update_password->bindParam(':password', $password_hash);
     $stmt_update_password->bindParam(':id', $id);
+    $stmt_update_password->bindParam(':updated_at', $updated_at);
 
     if ($stmt_update_password->execute()) {
         $_SESSION['edit_success'] = "User updated successfully.";
         header('Location: ../views/sidebar.php');
+        exit;
     } else {
         $_SESSION['error'] = "Error updating user.";
+        header('Location: ../views/sidebar.php');
+        exit;
     }
 }
 ?>

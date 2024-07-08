@@ -43,7 +43,7 @@ if (!isset($data['username']) || !isset($data['phone_number']) || !isset($data['
 
 // Truy cập các thuộc tính
 $username = $data['username'];
-$phone_number = $data['phone_number'];
+$phone_number = "0" . $data['phone_number'];
 $email = $data['email'];
 $password = $data['password'];
 $table_name = 'users';
@@ -52,7 +52,8 @@ $query = "INSERT INTO " . $table_name . "
                 SET username = :username,
                     email = :email,
                     phone_number = :phone_number,
-                    password = :password";
+                    password = :password,
+                    created_at = :created_at";
 
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':username', $username);
@@ -60,6 +61,9 @@ $stmt->bindParam(':email', $email);
 $stmt->bindParam(':phone_number', $phone_number);
 $password_hash = password_hash($password, PASSWORD_BCRYPT);
 $stmt->bindParam(':password', $password_hash);
+$created_at = date('Y-m-d H:i:s');
+$stmt->bindParam(':created_at', $created_at);
+
 if ($stmt->execute()) {
     $_SESSION['create_success'] = "User create successfully.";
     header('Location: ../views/sidebar.php');

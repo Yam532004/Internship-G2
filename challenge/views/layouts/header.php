@@ -69,4 +69,10 @@
   <!-- Bootstrap JS (Latest) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 
+  <!-- datatable  -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+
+
 </head>

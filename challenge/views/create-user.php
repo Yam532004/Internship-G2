@@ -43,15 +43,25 @@
                             <div class="col-lg-6 col-12">
                                 <div class="form-group">
                                     <p class="text-left" for="password">Password</p>
-                                    <input type="text" name="password" class="form-control" id="password" placeholder="Password">
-                                    <span class="error float-left "></span>
+                                    <div class="container">
+                                        <div class="row">
+                                            <input type="text" name="password" class="form-control col-10" id="password" placeholder="Password">
+                                            <span class="input-group-text col-2"><i class="far fa-eye-slash" id="togglePassword"></i></span>
+                                            <span class="error float-left"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group mb-2">
                                     <p class="text-left" for="confirm_password">Confirm Password</p>
-                                    <input type="text" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm password">
-                                    <span class="error float-left "></span>
+                                    <div class="container">
+                                        <div class="row">
+                                            <input type="text" name="confirm_password" class="form-control col-10" id="confirm_password" placeholder="Confirm password">
+                                            <span class="input-group-text col-2"><i class="far fa-eye-slash" id="toggleConfirm_Password"></i></span>
+                                            <span class="error float-left "></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -65,3 +75,30 @@
         </div>
     </div>
 </div>
+<Script>
+    const toggleConfirm_Password = document.querySelector('#toggleConfirm_Password')
+    const confirm_password = document.querySelector("#confirm_password");
+
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+
+    togglePassword.addEventListener("click", function() {
+
+        // toggle the type attribute
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+
+        // toggle the eye icon
+        this.classList.toggle('fa-eye');
+    });
+
+    toggleConfirm_Password.addEventListener("click", function() {
+
+        // toggle the type attribute
+        const type = confirm_password.getAttribute("type") === "password" ? "text" : "password";
+        confirm_password.setAttribute("type", type);
+
+        // toggle the eye icon
+        this.classList.toggle('fa-eye');
+    });
+</Script>

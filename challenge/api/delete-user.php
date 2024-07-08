@@ -34,10 +34,13 @@ if (!isset($data['id'])) {
 
 $user_id = $data['id'];
 $table_name = 'users';
+$deleted_at = date('Y-m-d H:i:s');
 
-$query = "DELETE FROM " . $table_name . " WHERE id = :id";
+$query = "UPDATE users SET deleted_at = :deleted_at WHERE id = :id";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':id', $user_id);
+$stmt->bindParam(':deleted_at', $deleted_at);
+
 if ($stmt->execute()) {
     $_SESSION['delete_success'] = "User deleted successfully.";
     // Redirect to sidebar.php with success message

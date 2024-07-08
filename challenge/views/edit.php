@@ -40,8 +40,13 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="edit_password">Password</label>
-                                    <input type="text" name="password" class="form-control" id="edit_password" placeholder="Enter password">
-                                    <span class="error text-left"></span>
+                                    <div class="container">
+                                        <div class="row">
+                                            <input type="text" name="password" class="form-control col-10" id="edit_password" placeholder="Enter password">
+                                            <span class="input-group-text col-2"><i class="far fa-eye-slash" id="toggleEdit_password"></i></span>
+                                            <span class="error text-left"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,3 +59,13 @@
         </div>
     </div>
 </div>
+<script>
+    var edit_password = document.querySelector('#edit_password');
+    var toggleEdit_password = document.querySelector('#toggleEdit_password');
+    toggleEdit_password.addEventListener('click', function () {
+        const type = edit_password.getAttribute('type') === 'password' ? 'text' : 'password';
+        edit_password.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+
+    })
+</script>
