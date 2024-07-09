@@ -23,13 +23,17 @@ unset($_SESSION['error']);
         </div>
         <div class="mb-5">
             <p style="color:aliceblue;" for="password">Password</p>
-            <input name="password" id="password" placeholder="Input your password *" />
-            <span class="error" style="color: red;"><?php echo $errorMessage ?></span>
+            <div class="container">
+              <input name="password" id="login_password" placeholder="Input your password *" />
+              <span class="input-group-text col-2"><i class="far fa-eye-slash" id="toggleLogin_password"></i></span>
+              <span class="error" style="color: red;"><?php echo $errorMessage ?></span>
+
+            </div>
         </div>
         <button type="submit">Submit</button>
         <div class="acc-text">
-
-            <span style="color: #0000ff; cursor: pointer;">Fogot password?</span>
+            <!-- <span style="color: #0000ff; cursor: pointer;">Fogot password?</span> -->
+             <a  style="color: #0000ff; cursor: pointer;" href="reset-password.php">Forgot password</a>
         </div>
     </form>
 </div>
@@ -76,4 +80,14 @@ unset($_SESSION['error']);
       <?php unset($_SESSION['edit_success']); ?>
     <?php endif; ?>
   });
+</script>
+<script>
+    var login_password = document.querySelector('#login_password');
+    var toggleLogin_password = document.querySelector('#toggleLogin_password');
+    toggleLogin_password.addEventListener('click', function () {
+        const type = login_password.getAttribute('type') === 'password' ? 'text' : 'password';
+        login_password.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+
+    })
 </script>
