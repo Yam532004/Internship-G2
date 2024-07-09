@@ -9,7 +9,7 @@ require_once 'layouts/header.php'
                 <div class="card-header">
                     <h3 class="card-title">Reset password</h3>
                 </div>
-                <form action="../api/password-reset-code.php" method="POST" id="quickForm" novalidate="novalidate">
+                <form action="../api/password_reset_request.php" method="POST" id="quickForm" novalidate="novalidate">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
