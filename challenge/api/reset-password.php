@@ -12,26 +12,42 @@ $databaseService = new DatabaseService();
 
 $conn = $databaseService->getConnection();
 
-if (isset($_SESSION['reset_token'])) {
-    $token = $_SESSION['reset_token'];
 
-    $stmt = $conn->prepare("SELECT email FROM users WHERE verify_token = ? AND token_expiry > NOW() LIMIT 1");
-    $stmt->execute([$token]);
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($result) {
-        $email = $result['email'];
-?>
-        <form action="update_password.php" method="POST">
-            <input type="hidden" name="email" value="<?php echo $email; ?>">
-            <input type="hidden" name="token" value="<?php echo $token; ?>">
-            <input type="password" name="new_password" placeholder="Nhập mật khẩu mới" required>
-            <button type="submit">Reset password</button>
-        </form>
-<?php
+
+if (isset($_GET['email']) && isset($_GET['code']) && isset($_GET['expiry']) && isset($_GET['encodeKey'])) {
+
+    function decrypt($data, $key)
+    {
+        $cipher = "aes-256-cbc";
+        $ivlen = openssl_cipher_iv_length($cipher);
+        $data = base64_decode($data);
+        $iv = substr($data, 0, $ivlen);
+        $ciphertext = substr($data, $ivlen);
+        return openssl_decrypt($ciphertext, $cipher, $key, $options = 0, $iv);
+    }
+    $encodeKey = $_GET['encodeKey'];
+    $email = $_GET['email'];
+    $code = $_GET['code'];
+    $expiry = $_GET['expiry'];
+    $decryptedEmail = decrypt($email, $encodeKey);
+    $decryptedCode = decrypt($code, $encodeKey);
+    $decryptedExpiry = decrypt($expiry, $encodeKey);
+
+    
+    $stmt = $conn->prepare("SELECT * FROM reset_passwords WHERE email = :email AND verify_token = :code AND token_expiry = :expiry");
+    $stmt->bindParam(':email', $decryptedEmail);
+    $stmt->bindParam(':code', $decryptedCode);
+    $stmt->bindParam(':expiry', $decryptedExpiry);
+    $row = $stmt->execute();
+
+    if ($row) {
+        header('Location: ../views/password-reset-form.php');
+        exit(0);
     } else {
-        echo 'Token is invalid';
+        echo 'Invalid token';
+        exit(0);
     }
 } else {
     echo 'Token is required';
-    echo $_SESSION['reset_token'];
+    echo $_GET['user'];
 }

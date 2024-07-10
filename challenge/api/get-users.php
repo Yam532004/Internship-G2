@@ -28,7 +28,7 @@ $stmt->execute();
 $totalRecords = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
 // Query to fetch users with pagination
-$sql = "SELECT * FROM users WHERE username LIKE ? OR email LIKE ? OR phone_number LIKE ? ORDER BY id DESC LIMIT ?, ?";
+$sql = "SELECT * FROM users WHERE deleted_at IS NULL AND (username LIKE ? OR email LIKE ? OR phone_number LIKE ?) ORDER BY id DESC LIMIT ?, ?";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
 $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);

@@ -9,33 +9,36 @@ unset($_SESSION['old_email']);
 unset($_SESSION['error']);
 ?>
 <div class="d-flex justify-content-center">
-    <div class="background-login">
-        <div class="shape"></div>
-        <div class="shape"></div>
+  <div class="background-login">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <form id="myform" class="form" action="../api/login.php" method="post">
+    <h3 style="color:aliceblue;">Sign in</h3>
+    <input type="hidden" id="token" name="token">
+
+    <div>
+      <p style="color:aliceblue;" for="email">Email</p>
+      <input type="text" name="email" id="email" placeholder="Input your email *" value="<?php echo $oldEmail; ?>" class="" />
+      <span class="error"></span>
     </div>
-    <form id="myform" class="form" action="../api/login.php" method="post">
-        <h3 style="color:aliceblue;">Sign in</h3>
-        <input type="hidden" id="token" name="token">
+    <div class="mb-5">
+      <p style="color:aliceblue;" for="password">Password</p>
+      <div class="container">
+        <div class="row">
+          <input class="col-10" name="password" id="login_password" placeholder="Input your password*" />
+          <span class="input-group-text col-2"><i class="far fa-eye-slash" id="toggleLogin_password"></i></span>
+          <span class="error"><?php echo $errorMessage ?></span>
+        </div>
 
-        <div><p style="color:aliceblue;" for="email">Email</p>
-            <input type="text" name="email" id="email" placeholder="Input your email *" value="<?php echo htmlspecialchars($oldEmail); ?>" />
-            <span class="error"></span>
-        </div>
-        <div class="mb-5">
-            <p style="color:aliceblue;" for="password">Password</p>
-            <div class="container">
-              <input name="password" id="login_password" placeholder="Input your password *" />
-              <span class="input-group-text col-2"><i class="far fa-eye-slash" id="toggleLogin_password"></i></span>
-              <span class="error" style="color: red;"><?php echo $errorMessage ?></span>
-
-            </div>
-        </div>
-        <button type="submit">Submit</button>
-        <div class="acc-text">
-            <!-- <span style="color: #0000ff; cursor: pointer;">Fogot password?</span> -->
-             <a  style="color: #0000ff; cursor: pointer;" href="reset-password.php">Forgot password</a>
-        </div>
-    </form>
+      </div>
+    </div>
+    <button type="submit">Submit</button>
+    <div class="acc-text">
+      <!-- <span style="color: #0000ff; cursor: pointer;">Fogot password?</span> -->
+      <a style="color: #0000ff; cursor: pointer;" href="reset-password.php">Forgot password</a>
+    </div>
+  </form>
 </div>
 <script type="text/javascript" src="../assets/javascript/login.js"></script>
 
@@ -79,15 +82,20 @@ unset($_SESSION['error']);
       toastr.success('<?php echo $_SESSION['edit_success'] ?>');
       <?php unset($_SESSION['edit_success']); ?>
     <?php endif; ?>
+
+    <?php if (isset($_SESSION['reset_password'])) : ?>
+      toastr.success('<?php echo $_SESSION['reset_password'] ?>');
+      <?php unset($_SESSION['reset_password']); ?>
+    <?php endif; ?>
   });
 </script>
 <script>
-    var login_password = document.querySelector('#login_password');
-    var toggleLogin_password = document.querySelector('#toggleLogin_password');
-    toggleLogin_password.addEventListener('click', function () {
-        const type = login_password.getAttribute('type') === 'password' ? 'text' : 'password';
-        login_password.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
+  var login_password = document.querySelector('#login_password');
+  var toggleLogin_password = document.querySelector('#toggleLogin_password');
+  toggleLogin_password.addEventListener('click', function() {
+    const type = login_password.getAttribute('type') === 'password' ? 'text' : 'password';
+    login_password.setAttribute('type', type);
+    this.classList.toggle('fa-eye');
 
-    })
+  })
 </script>

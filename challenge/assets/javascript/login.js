@@ -46,23 +46,25 @@ $(document).ready(function () {
         required: "Please provide a password",
         minlength: "Your password must be at least 5 characters long",
         checkPassword:
-          "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special symbol",
+          "Password must be at least 5 characters long, contain one uppercase letter, one lowercase letter, one number, and one special symbol",
       },
     },
     errorPlacement: function (error, element) {
-      error.appendTo(element.siblings("span.error")); // Chèn thông báo lỗi vào span.error
+      // Chèn thông báo lỗi vào sibling span.error của phần tử input
+      error.appendTo(element.siblings("span.error"));
     },
     highlight: function (element) {
-      $(element).addClass("error"); // Thêm lớp 'error' vào phần tử không hợp lệ
+      // Không cần thay đổi lớp 'error' của phần tử input
     },
     unhighlight: function (element) {
-      $(element).removeClass("error"); // Loại bỏ lớp 'error' từ phần tử hợp lệ
+      // Không cần loại bỏ lớp 'error' từ phần tử input
     },
+
     submitHandler: function (form) {
       grecaptcha.ready(function () {
         grecaptcha
           .execute("6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS", {
-            action: "register",
+            action: "login",
           })
           .then(function (token) {
             document.getElementById("token").value = token;

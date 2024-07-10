@@ -1,5 +1,6 @@
 <?php
 session_start();
+var_dump($_SESSION['email']);
 include_once '../config/database.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -10,31 +11,31 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $databaseService = new DatabaseService();
 $conn = $databaseService->getConnection();
 
-if (isset($_POST['email'], $_POST['token'], $_POST['new_password'])) {
+if (isset($_POST['email']) && isset($_POST['new_password'])) {
     $email = $_POST['email'];
-    $token = $_POST['token'];
     $new_password = password_hash($_POST['new_password'], PASSWORD_BCRYPT);
 
-    $stmt = $conn->prepare("SELECT email FROM users WHERE verify_token = ? AND email = ? AND token_expiry > NOW() LIMIT 1");
-    $stmt->execute([$token, $email]);
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $update_stmt = $conn->prepare("UPDATE users SET password = :new_password WHERE email = :email LIMIT 1");
+    $update_stmt->bindParam(':new_password', $new_password);
+    $update_stmt->bindParam(':email', $email);
 
-    if ($result){
-        $update_stmt = $conn->prepare("UPDATE users SET password = ?, verify_token = NULL, token_expiry = NULL  WHERE email = ? LIMIT 1");
-        $update_stmt->execute([$new_password, $email]);
-        if ($update_stmt->rowCount() > 0) {
-            $_SESSION['status'] = "Password updated";
-            header("Location: login.php");
-            exit(0);
-        }else{
-            $_SESSION['status'] = "Password can not be changed";
-            header("Location: reset-password.php?token=$token");
-            exit(0);
+    $result = $update_stmt->execute();
+
+    // Check if update was successful
+    if ($result) {
+        $_SESSION['reset_password'] ='Successfully updated password';
+        header('Location:../views/login.php');
+    } else {
+        // Check if email was not found
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        if ($stmt->rowCount() == 0) {
+            echo "Email not found.";
+        } else {
+            echo "Password update failed.";
         }
-    }else{
-        $_SESSION['status'] = "Invalid request";
-        header("Location: reset-password.php");
-        exit(0);
     }
-
+} else {
+    echo "Required parameters (email and new_password) are missing.";
 }

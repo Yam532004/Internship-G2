@@ -93,7 +93,7 @@ if ($num > 0) {
         http_response_code(200);
 
         $jwt = JWT::encode($token, $secret_key, 'HS256');
-        $_SESSION['login_success'] = "User was successfully registered.";
+        $_SESSION['login_success'] = "User was successfully login.";
         // Redirect to sidebar.php with success message
         header('Location: ../views/sidebar.php');
     } else {
