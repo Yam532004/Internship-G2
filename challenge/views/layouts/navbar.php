@@ -18,9 +18,9 @@ if ($jwt) {
         $email = $decoded->data->email;
     } catch (Exception $e) {
         // Token không hợp lệ
-        // header('Location: ../views/login.php');
-        // exit();
-        echo  $e->getMessage();
+        header('Location: ../views/login.php');
+        exit();
+        // echo  $e->getMessage();
         // echo "Token không hợp lệ";
         // echo ($jwt);
     }
@@ -90,9 +90,11 @@ if ($jwt) {
                         <?php unset($_SESSION['login_success']); ?>
                     </div>
                 <?php else : ?>
-                    <div class="d-flex">
-                        <button class="btn btn-primary p-1 m-1" type="button" onclick="window.location.href='../../../views/register.php'">Sign in</button>
-                        <button class="btn btn-outline-danger p-1 m-1" type="button" onclick="window.location.href='../../../views/login.php'">Sign up</button>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6"><button class="btn btn-primary p-1 m-1" type="button" onclick="window.location.href='../../../views/login.php'">Sign in</button></div>
+                            <div class="col-6"><button class="btn btn-outline-danger p-1 m-1" type="button" onclick="window.location.href='../../../views/register.php'">Sign up</button></div>
+                        </div>
                     </div>
                 <?php endif; ?>
             </ul>
@@ -106,7 +108,7 @@ if ($jwt) {
                 <div class="modal-header">
                     <div class="container">
                         <div class="row">
-                            <h5 class="modal-title col-10" id="modal-logout-label">Logout Confirmation</h5>
+                            <h5 class="modal-title col-10" id="modal-logout-label">Log out</h5>
                             <button type="button" class="close col-2" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true" class="justify-content-center">&times;</span>
                             </button>
@@ -114,12 +116,18 @@ if ($jwt) {
                     </div>
                 </div>
                 <div class="modal-body justify-content-center">
-                    <p>Are you sure you want to log out?</p>
+                    <p class="text-center">Are you sure you want to log out?</p>
                 </div>
-                <div class="modal-footer container">
-                    <div class="row">
-                        <button type="button" class="btn btn-secondary col-6 float-left" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary col-6 float-right" id="confirmLogout">Logout</button>
+                <div class="modal-footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary " data-dismiss="modal">Cancel</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary" id="confirmLogout">Logout</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,15 +151,7 @@ if ($jwt) {
             })
 
 
-            var confirmLogoutBtn = document.getElementById('confirmLogout');
-            confirmLogoutBtn.addEventListener('click', function() {
-                // Perform logout logic here
-                // For example, redirect to logout endpoint
-                // window.location.href = '/logout';
 
-                // Close the modal
-                modalLogout.classList.remove('show');
-            });
         })
     </script>
 
@@ -160,4 +160,20 @@ if ($jwt) {
             display: block;
         }
     </style>
+    <script>
+        $(document).ready(function() {
+            $("#confirmLogout").click(function() {
+                $.ajax({
+                    url: "../api/logout.php",
+                    type: "POST",
+                    success: function(response) {
+                        window.location.href = "../views/login.php";
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert("Error: " + errorThrown);
+                    }
+                });
+            });
+        })
+    </script>
 </body>

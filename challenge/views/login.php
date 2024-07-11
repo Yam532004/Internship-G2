@@ -33,10 +33,10 @@ unset($_SESSION['error']);
                   <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleLogin_password"></i></span>
                 </div>
               </div>
-             <span class="error"><b><?php echo $errorMessage ?></b></span>
+              <span class="error"><b><?php echo $errorMessage ?></b></span>
               <label id="login_password-error" class="error" for="login_password"></label>
             </div>
-            <p> <a href="reset-password.php"><i>Forgot password</i></a>? Did you <a href="register.php" > not have an account? </a></i></p>
+            <p> <a href="reset-password.php"><i>Forgot password</i></a>? Did you <a href="register.php"> not have an account? </a></i></p>
           </div>
           <div class="card-footer">
             <button type="submit" class="btn btn-primary w-100" style="
@@ -109,4 +109,10 @@ unset($_SESSION['error']);
     this.classList.toggle('fa-eye');
 
   })
+
+  login_password.addEventListener('input', function() {
+    if (this.getAttribute('type') !== 'password') {
+      this.setAttribute('type', 'password');
+    }
+  });
 </script>

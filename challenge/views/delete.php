@@ -17,7 +17,6 @@
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"> No</button>
-
                             </div>
                             <div class="col-6">
                                 <button type="submit" class="btn btn-primary">Yes</button>
