@@ -1,14 +1,38 @@
 <?php
-require 'Header.php';
-// session_start();
+require '../vendor/autoload.php';
+require 'header.php';
+
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
+
+$secret_key = "6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS";
+$jwt = isset($_SESSION['token']) ? $_SESSION['token'] : null;
+$username = '';
+$email = '';
+
+if ($jwt) {
+    try {
+        $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+        $user_id = $decoded->data->id;
+        $username = $decoded->data->username;
+        $email = $decoded->data->email;
+    } catch (Exception $e) {
+        // Token không hợp lệ
+        // header('Location: ../views/login.php');
+        // exit();
+        echo  $e->getMessage();
+        // echo "Token không hợp lệ";
+        // echo ($jwt);
+    }
+}
+
+
 ?>
 
 <body>
     <div class="container-fluid">
-
         <!-- Navbar -->
         <nav class="navbar navbar-expand navbar-white navbar-light">
-
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -19,9 +43,6 @@ require 'Header.php';
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
-                </li>
-                <li class="nav-item dropdown">
-
                 </li>
             </ul>
 
@@ -40,37 +61,103 @@ require 'Header.php';
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
-                <?php if (isset($_SESSION['login_success'])) : ?>
-                    <div class="bg-info rounded-circle">
-
-                        <?php unset($_SESSION['login_success']); ?>
-                    </div>
-                    <div class="dropdown">
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                <?php if (isset($_SESSION['token'])) : ?>
+                    <div>
+                        <div class="rounded-circle border d-flex justify-content-center align-items-center" style="width:50px;height: 50px" alt="Avatar">
+                            <img style="width:50px;height: 50px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFGxaSQnCZSQPXJpmEauA_tqVSflVxp9QNZg&s" alt="" id="dropdownToggle">
                         </div>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            <!-- <img src="https://stimg.cardekho.com/images/carexteriorimages/930x620/Porsche/718/10989/1690874880367/front-left-side-47.jpg" alt="Avatar" class="avatar" class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
-Hallo
-                            <span class="caret"></span></button>
+                        <li class="nav-item dropdown">
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="drop-avatar">
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-user mr-2"></i> <?php echo $username; ?>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-envelope mr-2"></i> <?php echo $email; ?>
+                                </a>
+                                <div class="dropdown-divider"></div>
 
-                        <ul class="dropdown-menu">
-                            <li><a href="#">HTML</a></li>
-                            <li><a href="#">CSS</a></li>
-                            <li><a href="#">JavaScript</a></li>
-                        </ul>
+                                <a href="#" class="dropdown-item" id="logoutLink" data-toggle="modal" data-target="#modal-logout">
+                                    <i class="fa-solid fa-right-to-bracket mr-2"></i>Log out
+                                </a>
+
+
+
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                            </div>
+                        </li>
+                        <?php unset($_SESSION['login_success']); ?>
                     </div>
                 <?php else : ?>
                     <div class="d-flex">
-                        <button class="btn btn-primary p-1 m-1 " type="button" onclick="window.location.href='../../../views/register.php'">Sign in</button>
+                        <button class="btn btn-primary p-1 m-1" type="button" onclick="window.location.href='../../../views/register.php'">Sign in</button>
                         <button class="btn btn-outline-danger p-1 m-1" type="button" onclick="window.location.href='../../../views/login.php'">Sign up</button>
                     </div>
-
                 <?php endif; ?>
             </ul>
         </nav>
         <!-- /.navbar -->
+    </div>
+
+    <div class="modal fade" id="modal-logout" tabindex="-1" aria-labelledby="modal-logout-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="container">
+                        <div class="row">
+                            <h5 class="modal-title col-10" id="modal-logout-label">Logout Confirmation</h5>
+                            <button type="button" class="close col-2" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="justify-content-center">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body justify-content-center">
+                    <p>Are you sure you want to log out?</p>
+                </div>
+                <div class="modal-footer container">
+                    <div class="row">
+                        <button type="button" class="btn btn-secondary col-6 float-left" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary col-6 float-right" id="confirmLogout">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('dropdownToggle').addEventListener('click', function(event) {
+            event.preventDefault();
+            var dropdownMenu = document.getElementById('drop-avatar');
+            dropdownMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var lougoutLink = document.getElementById('logoutLink');
+            var modalLogout = document.getElementById("modal-logout");
+
+            lougoutLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                modalLogout.classList.add('show');
+            })
+
+
+            var confirmLogoutBtn = document.getElementById('confirmLogout');
+            confirmLogoutBtn.addEventListener('click', function() {
+                // Perform logout logic here
+                // For example, redirect to logout endpoint
+                // window.location.href = '/logout';
+
+                // Close the modal
+                modalLogout.classList.remove('show');
+            });
+        })
+    </script>
+
+    <style>
+        .dropdown-menu.show {
+            display: block;
+        }
+    </style>
+</body>

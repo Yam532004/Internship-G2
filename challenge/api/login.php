@@ -51,8 +51,11 @@ $password = $data['password'];
 
 // Query to get user details
 $table_name = 'users';
-$query = "SELECT id, username, password, is_locked FROM " . $table_name . " WHERE email = ? LIMIT 0,1";
-
+$query = "SELECT id, username, password, is_locked, role 
+          FROM " . $table_name . " 
+          WHERE email = ? 
+          AND deleted_at IS NULL 
+          LIMIT 0,1";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(1, $email);
 $stmt->execute();
@@ -64,6 +67,7 @@ if ($num > 0) {
     $username = $row['username'];
     $is_locked = $row['is_locked'];
     $password2 = $row['password'];
+    $role = $row['role'];
 
     if ($is_locked) {
         $_SESSION['message_is_locked'] = "The account has been locked";
@@ -75,8 +79,8 @@ if ($num > 0) {
         $issuer_claim = "localhost"; // this can be the server name
         $audience_claim = "THE_AUDIENCE";
         $issuedat_claim = time(); // issued at
-        $notbefore_claim = $issuedat_claim + 10; // not before in seconds
-        $expire_claim = $issuedat_claim + 60; // expire time in seconds
+        $notbefore_claim = $issuedat_claim ; // not before in seconds
+        $expire_claim = $issuedat_claim + 1000; // expire time in seconds
         $token = array(
             "iss" => $issuer_claim,
             "aud" => $audience_claim,
@@ -91,11 +95,20 @@ if ($num > 0) {
         );
 
         http_response_code(200);
-
         $jwt = JWT::encode($token, $secret_key, 'HS256');
         $_SESSION['login_success'] = "User was successfully login.";
+        $_SESSION['token'] = $jwt;
         // Redirect to sidebar.php with success message
-        header('Location: ../views/sidebar.php');
+       
+        
+        if ($role == 1 ){
+            header('Location: ../views/homepage.php');
+          
+        }else{
+            header('Location: ../views/sidebar.php');
+        }
+
+       
     } else {
         $_SESSION['error'] = "Incorrect password.";
         $_SESSION['old_email'] = $email;

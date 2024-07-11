@@ -8,37 +8,48 @@ unset($_SESSION['old_email']);
 // Xóa thông báo lỗi sau khi hiển thị nó
 unset($_SESSION['error']);
 ?>
-<div class="d-flex justify-content-center">
-  <div class="background-login">
-    <div class="shape"></div>
-    <div class="shape"></div>
-  </div>
-  <form id="myform" class="form" action="../api/login.php" method="post">
-    <h3 style="color:aliceblue;">Sign in</h3>
-    <input type="hidden" id="token" name="token">
 
-    <div>
-      <p style="color:aliceblue;" for="email">Email</p>
-      <input type="text" name="email" id="email" placeholder="Input your email *" value="<?php echo $oldEmail; ?>" class="" />
-      <span class="error"></span>
-    </div>
-    <div class="mb-5">
-      <p style="color:aliceblue;" for="password">Password</p>
-      <div class="container">
-        <div class="row">
-          <input class="col-10" name="password" id="login_password" placeholder="Input your password*" />
-          <span class="input-group-text col-2"><i class="far fa-eye-slash" id="toggleLogin_password"></i></span>
-          <span class="error"><?php echo $errorMessage ?></span>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-md-6">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Sign in</h3>
         </div>
-
+        <form id="myform" action="../api/login.php" method="post">
+          <div class="card-body container">
+            <input type="hidden" id="token" name="token">
+            <div class="form-group">
+              <label for="email">Email address <span style="color:red">(*)</span> </label>
+              <input type="email" name="email" class="form-control" id="email" value="<?php echo $oldEmail; ?>">
+              <label id="email-error" class="error" for="email"></label>
+            </div>
+            <div class="form-group">
+              <label for="password">Password <span style="color:red">(*)</span></label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="password" id="login_password">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleLogin_password"></i></span>
+                </div>
+              </div>
+             <span class="error"><b><?php echo $errorMessage ?></b></span>
+              <label id="login_password-error" class="error" for="login_password"></label>
+            </div>
+            <p> <a href="reset-password.php"><i>Forgot password</i></a>? Did you <a href="register.php" > not have an account? </a></i></p>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary w-100" style="
+                            width: max-content !important;
+                            float: inline-end;
+                        ">Submit
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-    <button type="submit">Submit</button>
-    <div class="acc-text">
-      <!-- <span style="color: #0000ff; cursor: pointer;">Fogot password?</span> -->
-      <a style="color: #0000ff; cursor: pointer;" href="reset-password.php">Forgot password</a>
-    </div>
-  </form>
+    <div class="col-3"></div>
+  </div>
 </div>
 <script type="text/javascript" src="../assets/javascript/login.js"></script>
 

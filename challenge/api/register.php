@@ -52,6 +52,7 @@ $query = "INSERT INTO " . $table_name . "
                 SET username = :username,
                     email = :email,
                     phone_number = :phone_number,
+                    role = :role,
                     password = :password,
                     created_at = :created_at";
 
@@ -59,6 +60,8 @@ $stmt = $conn->prepare($query);
 $stmt->bindParam(':username', $username);
 $stmt->bindParam(':email', $email);
 $stmt->bindParam(':phone_number', $phone_number);
+$role = 1;
+$stmt->bindParam(':role', $role);
 $password_hash = password_hash($password, PASSWORD_BCRYPT);
 $stmt->bindParam(':password', $password_hash);
 $created_at = date('Y-m-d H:i:s');
@@ -66,7 +69,8 @@ $stmt->bindParam(':created_at', $created_at);
 
 if ($stmt->execute()) {
     $_SESSION['create_success'] = "User create successfully.";
-    header('Location: ../views/sidebar.php');
+
+    header('Location: ../views/login.php');
     exit;
 } else {
     // http_response_code(400);

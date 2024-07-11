@@ -115,30 +115,30 @@ include_once '../config/dbconnect.php'
             searching: true,
             pageLength: 10,
             lengthChange: true,
-            lengthMenu : [10, 25, 50, 100],
+            lengthMenu: [10, 25, 50, 100],
             serverSide: true, // Use server-side processing
             ajax: function(data, callback, settings) {
                 let page = Math.ceil(data.start / data.length) + 1; // Calculate the current page from start index
                 let searchValue = data.search.value;
-                updateTable(page,data.length, searchValue, callback, settings);
+                updateTable(page, data.length, searchValue, callback, settings);
             }
         });
 
-        function updateTable(page, limit, search,  callback, settings) {
+        function updateTable(page, limit, search, callback, settings) {
             $.ajax({
                 url: root + 'api/get-users.php',
                 method: 'GET',
                 data: {
                     page: page,
                     limit: limit,
-                    search: search 
+                    search: search
                 },
                 dataType: 'json',
                 success: function(response) {
                     let users = response.data; // Adjust this based on your API response structure
                     let totalRecords = response.totalRecords; // Adjust this based on your API response structure
                     let tableData = [];
-
+                    console.log(response)
                     if (users.length > 0) {
                         users.forEach(function(user) {
                             let row = [
