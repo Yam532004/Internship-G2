@@ -79,7 +79,7 @@ if ($num > 0) {
         $issuer_claim = "localhost"; // this can be the server name
         $audience_claim = "THE_AUDIENCE";
         $issuedat_claim = time(); // issued at
-        $notbefore_claim = $issuedat_claim ; // not before in seconds
+        $notbefore_claim = $issuedat_claim; // not before in seconds
         $expire_claim = $issuedat_claim + 1000; // expire time in seconds
         $token = array(
             "iss" => $issuer_claim,
@@ -90,7 +90,8 @@ if ($num > 0) {
             "data" => array(
                 "id" => $id,
                 "username" => $username,
-                "email" => $email
+                "email" => $email,
+                "role" => $role
             )
         );
 
@@ -98,17 +99,13 @@ if ($num > 0) {
         $jwt = JWT::encode($token, $secret_key, 'HS256');
         $_SESSION['login_success'] = "User was successfully login.";
         $_SESSION['token'] = $jwt;
-        // Redirect to sidebar.php with success message
-       
-        
-        if ($role == 1 ){
-            header('Location: ../views/homepage.php');
-          
-        }else{
+        if ($role == 2) {
             header('Location: ../views/sidebar.php');
+            exit();
+        } else {
+            header('Location:../views/homepage.php');
+            exit();
         }
-
-       
     } else {
         $_SESSION['error'] = "Incorrect password.";
         $_SESSION['old_email'] = $email;

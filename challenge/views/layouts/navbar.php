@@ -9,6 +9,7 @@ $secret_key = "6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS";
 $jwt = isset($_SESSION['token']) ? $_SESSION['token'] : null;
 $username = '';
 $email = '';
+$role = '';
 
 if ($jwt) {
     try {
@@ -16,6 +17,7 @@ if ($jwt) {
         $user_id = $decoded->data->id;
         $username = $decoded->data->username;
         $email = $decoded->data->email;
+        $role = $decoded->data->role;
     } catch (Exception $e) {
         // Token không hợp lệ
         header('Location: ../views/login.php');
@@ -25,38 +27,52 @@ if ($jwt) {
         // echo ($jwt);
     }
 }
-
-
 ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var navbar = document.getElementById('navbar');
+        var role = <?php echo json_encode($role); ?>;
+        if (role != 2) {
+            navbar.classList.remove('main-header');
+        }
+    });
+</script>
 
 <body>
     <div class="container-fluid">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="navbar">
             <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-            </ul>
-
-            <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
+            <div class="container">
+                <div class="row">
+                    <div class="col-7">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" id="toggleMenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                            </li>
+                            <li class="nav-item d-none d-sm-inline-block">
+                                <a href="index3.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item d-none d-sm-inline-block">
+                                <a href="#" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-5">
+                        <!-- SEARCH FORM -->
+                        <form class="form-inline ml-3 mt-1">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -149,14 +165,25 @@ if ($jwt) {
                 event.preventDefault();
                 modalLogout.classList.add('show');
             })
-
-
-
         })
     </script>
 
     <style>
         .dropdown-menu.show {
+            display: block;
+        }
+
+        .nav-item.d-none.d-sm-inline-block {
+            display: none;
+        }
+
+        @media (min-width: 576px) {
+            .nav-item.d-none.d-sm-inline-block {
+                display: inline-block;
+            }
+        }
+
+        .show-menu .nav-item.d-none.d-sm-inline-block {
             display: block;
         }
     </style>
@@ -173,6 +200,13 @@ if ($jwt) {
                         alert("Error: " + errorThrown);
                     }
                 });
+            });
+        })
+
+        $(document).ready(function() {
+            $("#tonggleMenu").click(function() {
+                e.preventDefault();
+                $(this).closest('.navbar-nav').toggleClass('show-menu');
             });
         })
     </script>

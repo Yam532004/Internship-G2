@@ -50,11 +50,11 @@ if (isset($_SESSION['alert'])) {
             </button>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-6">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/hQYRDNl-lGI?si=4FKGoMT5oDaxmnds/?start=10&&rel=0&autoplay=0&loop=1&playlist=hQYRDNl-lGI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-        <div class="col-6 mt-5">
+        <div class="col-md-6 col-sm-12 mt-5">
             <h3 class="text-center">About Us</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -62,7 +62,7 @@ if (isset($_SESSION['alert'])) {
                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <button type="button" class="btn btn-primary d-flex flex-row-reverse schedule">Get Schedule >>></button>
+            <button type="button" style="width:fit-content" class="btn btn-primary d-flex flex-row-reverse schedule">Get Schedule >>></button>
         </div>
     </div>
 </div>

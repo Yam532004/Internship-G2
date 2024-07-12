@@ -33,19 +33,30 @@ if (isset($_GET['email']) && isset($_GET['code']) && isset($_GET['expiry']) && i
     $decryptedCode = decrypt($code, $encodeKey);
     $decryptedExpiry = decrypt($expiry, $encodeKey);
 
-    
-    $stmt = $conn->prepare("SELECT * FROM reset_passwords WHERE email = :email AND verify_token = :code AND token_expiry = :expiry");
-    $stmt->bindParam(':email', $decryptedEmail);
-    $stmt->bindParam(':code', $decryptedCode);
-    $stmt->bindParam(':expiry', $decryptedExpiry);
-    $row = $stmt->execute();
+    $current_time = $current_time = date('Y-m-d H:i:s');
+    $current_timestamp = strtotime($current_time);
+    $expiry_timestamp = strtotime($decryptedExpiry);
+    // echo "Expiry timestamp" . $expiry_timestamp;
+    // echo "Current timestamp" . $current_timestamp;
 
-    if ($row) {
-        header('Location: ../views/password-reset-form.php');
-        exit(0);
+    if ($current_timestamp > $expiry_timestamp) {
+        $_SESSION['error_token'] = "Token expired";
+        header('Location: ../views/reset-password.php');
+        exit();
     } else {
-        echo 'Invalid token';
-        exit(0);
+        $stmt = $conn->prepare("SELECT * FROM reset_passwords WHERE email = :email AND verify_token = :code AND token_expiry = :expiry");
+        $stmt->bindParam(':email', $decryptedEmail);
+        $stmt->bindParam(':code', $decryptedCode);
+        $stmt->bindParam(':expiry', $decryptedExpiry);
+        $row = $stmt->execute();
+
+        if ($row) {
+            header('Location: ../views/password-reset-form.php');
+            exit(0);
+        } else {
+            echo 'Invalid token';
+            exit(0);
+        }
     }
 } else {
     echo 'Token is required';

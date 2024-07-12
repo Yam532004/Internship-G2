@@ -145,22 +145,27 @@ include_once '../config/dbconnect.php'
                                 user.id,
                                 user.username,
                                 user.email,
-                                user.phone_number,
-                                `<form method="POST" action="../api/is_locked.php" id="lockForm_${user.id}">
-                                <div class="form-check form-switch d-flex justify-content-center text-center">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked_${user.id}" name="is_locked" value="${user.is_locked}" ${user.is_locked == 0 ? 'checked' : ''} onchange="document.getElementById('lockForm_${user.id}').submit();">
-                                    <input type="hidden" name="id" value="${user.id}"/>
-                                </div>
-                             </form>`,
-                                `<div class="text-center d-flex justify-content-center">
-                                <button type="button" onclick="editModal(${user.id}, 'api/get-user.php?id=${user.id}', 'api/edit-user.php')" title="Edit user" class="btn btn-sm btn-warning col-2 d-flex justify-content-center align-items-center" data-toggle="modal" data-target="#editModal">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                                <button type="button" onclick="deleteModal(${user.id}, 'api/delete-user.php')" title="Delete user" class="btn btn-sm btn-danger col-2 ml-2 d-flex justify-content-center align-items-center" data-toggle="modal" data-target="#deleteModal">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                             </div>`
+                                "0"+user.phone_number,
+                                user.email !== "<?php echo $email ?>" ? `
+        <form method="POST" action="../api/is_locked.php" id="lockForm_${user.id}">
+            <div class="form-check form-switch d-flex justify-content-center text-center">
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked_${user.id}" name="is_locked" value="${user.is_locked}" ${user.is_locked == 1 ? 'checked' : ''} onchange="document.getElementById('lockForm_${user.id}').submit();">
+                <input type="hidden" name="id" value="${user.id}"/>
+            </div>
+        </form>
+    ` : '',
+                                user.email !== "<?php echo $email ?>" ? `
+        <div class="text-center d-flex justify-content-center">
+            <button type="button" onclick="editModal(${user.id}, 'api/get-user.php?id=${user.id}', 'api/edit-user.php')" title="Edit user" class="btn btn-sm btn-warning col-2 d-flex justify-content-center align-items-center" data-toggle="modal" data-target="#editModal">
+                <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" onclick="deleteModal(${user.id}, 'api/delete-user.php')" title="Delete user" class="btn btn-sm btn-danger col-2 ml-2 d-flex justify-content-center align-items-center" data-toggle="modal" data-target="#deleteModal">
+                <i class="fa fa-trash"></i>
+            </button>
+        </div>
+    ` : ''
                             ];
+
                             tableData.push(row);
                         });
                     }

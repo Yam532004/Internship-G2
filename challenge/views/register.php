@@ -10,7 +10,7 @@ include 'layouts/header.php'
                 <div class="card-header">
                     <h3 class="card-title">Sign up</h3>
                 </div>
-                <form id="myform" action="../api/register.php" method="post">
+                <form id="myform" action="../api/register.php" method="post" accept-charset="UTF-8">
                     <div class="card-body container">
                         <input type="hidden" id="token" name="token">
                         <div class="form-group">

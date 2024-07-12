@@ -18,9 +18,19 @@ session_start();
                             <input type="email" name="email_reset_password" class="form-control" id="email_reset_password" placeholder="Enter email">
                             <span class="error"></span>
                         </div>
+                        <p><i>* Please contact with Admin if you can not send email</i></p>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary" name="password-reset-link">Submit</button>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                     <a href="login.php">Back to Login</a>
+                                </div>
+                                <div class="col-6 pr-0">
+                                    <button type="submit" class="btn btn-primary" name="password-reset-link">Submit</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -43,12 +53,21 @@ session_start();
 <script>
     $(document).ready(function() {
         // Set toastr options
-        toastr.options.timeOut = 1500; // 1.5s
+        toastr.options.timeOut = 2000; // 1.5s
         // Check if there's a success message passed from PHP
         <?php if (isset($_SESSION['status'])) : ?>
             toastr.success('<?php echo $_SESSION['status'] ?>');
             <?php unset($_SESSION['status']); ?>
         <?php endif; ?>
 
+        <?php if (isset($_SESSION['error_email'])) : ?>
+            toastr.error('<?php echo $_SESSION['error_email'] ?>');
+            <?php unset($_SESSION['error_email']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error_token'])) : ?>
+            toastr.error('<?php echo $_SESSION['error_token'] ?>');
+            <?php unset($_SESSION['error_token']); ?>
+        <?php endif; ?>
     })
 </script>

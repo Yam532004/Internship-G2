@@ -18,15 +18,17 @@ use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
 
 $email = filter_var($_POST['email_reset_password'], FILTER_SANITIZE_EMAIL);
-$stmt = $conn->prepare('SELECT username, email FROM users WHERE email = :email LIMIT 1');
+$is_locked = 0;
+$stmt = $conn->prepare('SELECT username, email FROM users WHERE email = :email AND deleted_at IS NULL AND is_locked = :is_locked LIMIT 1');
 $stmt->bindParam(':email', $email);
+$stmt->bindParam(':is_locked', $is_locked);
 $stmt->execute();
 
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($result) {
     $token = bin2hex(random_bytes(16));
-    $expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
+    $expiry = date('Y-m-d H:i:s', strtotime('+1 minute'));
     $insert_reset_password = $conn->prepare("INSERT INTO reset_passwords (email, token_expiry, verify_token) VALUES (:email, :expiry, :token)");
 
     $insert_reset_password->bindParam(":email", $email);
@@ -56,15 +58,15 @@ if ($result) {
         $_SESSION['email'] = $email;
         $_SESSION['token'] = $encodedToken;
         $_SESSION['status'] = 'Success to send the request.';
-        header('Location: ../views/notification.php');
+        header('Location: ../views/reset-password.php');
     } else {
-        $_SESSION['status'] = 'Failed to send token';
+        $_SESSION['error_email'] = 'Failed to send token';
         // header('Location: reset-password.php');
         // exit(0);  // or use echo
         echo 'Failed to send token';
     }
 }else{
-    $_SESSION['status'] = "Email does not exist. You have to input your email address in the system";
+    $_SESSION['error_email'] = "Email does not exist or is locked. You have to input your email address in the system";
     header("Location: ../views/reset-password.php");
 
 }
