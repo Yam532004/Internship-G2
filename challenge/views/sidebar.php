@@ -2,34 +2,6 @@
 session_start();
 require '../vendor/autoload.php';
 
-use \Firebase\JWT\JWT;
-use \Firebase\JWT\Key;
-
-$secret_key = "6LeQIAEqAAAAAOmPO-298SpcJ4A_Drenp-SZDEbS";
-$jwt = isset($_SESSION['token']) ? $_SESSION['token'] : null;
-$username = '';
-$email = '';
-$role = '';
-
-if ($jwt) {
-  try {
-    $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
-    $user_id = $decoded->data->id;
-    $username = $decoded->data->username;
-    $email = $decoded->data->email;
-    $role = $decoded->data->role;
-    if ($role != 2) {
-      header('Location:../views/homepage.php');
-      exit();
-    }
-  } catch (Exception $e) {
-    header('Location: ../views/login.php');
-    exit();
-    // echo  $e->getMessage();
-    // echo "Token không hợp lệ";
-    // echo ($jwt);
-  }
-}
 ?>
 <div class="container-fluild">
   <div class="row">
