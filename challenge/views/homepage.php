@@ -1,6 +1,12 @@
 
-<?php
+<?php 
+require 'layouts/header.php';
 session_start();
+require '../vendor/autoload.php';
+
+include "layouts/navbar.php";
+
+
 // Kiểm tra và hiển thị thông báo nếu có
 if (isset($_SESSION['alert'])) {
     unset($_SESSION['alert']);
@@ -8,8 +14,7 @@ if (isset($_SESSION['alert'])) {
     echo $_SESSION['alert'];
 }
 ?>
-<?php include "layouts/header.php" ?>
-<?php include "layouts/navbar.php" ?>
+
 <div class="container mt-2" id="content">
     <div class="row ">
         <div class="col-sm-6">

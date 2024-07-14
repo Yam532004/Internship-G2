@@ -1,6 +1,10 @@
 <?php
-require '../vendor/autoload.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require 'header.php';
+
+require '../vendor/autoload.php';
 
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
@@ -22,24 +26,19 @@ if ($jwt) {
         $email = $decoded->data->email;
         $role = $decoded->data->role;
         $exp = $decoded->exp;
-        if ($role != 2) {
-            header('Location:../views/homepage.php');
-            exit();
-        }
-        // Check if token has expired
         $current_time = time(); // Current timestamp
         if ($current_time > $exp) {
             // Token expired, unset session and redirect to login page
             session_unset();
             session_destroy();
-            header('Location: ../views/login.php');
+            header('Location:../views/login.php');
             exit();
         }
     } catch (Exception $e) {
         // Handle any exceptions
         session_unset();
         session_destroy();
-        header('Location: ../views/login.php');
+        header('Location:../views/login.php');
         exit();
     }
 }
@@ -55,7 +54,6 @@ if ($jwt) {
         }
     });
 </script>
-
 <body>
     <div class="container-fluid">
         <!-- Navbar -->

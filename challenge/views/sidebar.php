@@ -1,7 +1,10 @@
 <?php require 'layouts/header.php';
 session_start();
 require '../vendor/autoload.php';
-
+if(!isset($_SESSION['token'])){
+  header('Location: login.php');
+  exit();
+}
 ?>
 <div class="container-fluild">
   <div class="row">
