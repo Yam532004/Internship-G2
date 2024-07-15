@@ -1,10 +1,11 @@
 <?php
+require_once '../config/database.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require 'header.php';
+require_once 'header.php';
 
-require '../vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
@@ -23,23 +24,46 @@ if ($jwt) {
         $user_id = $decoded->data->id;
         $username = $decoded->data->username;
         $email = $decoded->data->email;
-
         $role = $decoded->data->role;
 
         $_SESSION['email'] = $email;
     } catch (Exception $e) {
         session_unset();
-        session_destroy();
+        $_SESSION['logout_token'] = "Login session expired";
+        header('Location: ../views/login.php');
+        exit();
     }
 } else {
+    $_SESSION['logout_token'] = "Login session expired";
     session_unset();
-    session_destroy();
-    header('Location:../views/login.php');
-    exit(0);
+    header('Location: ../views/login.php');
+    exit();
+}
+
+$databaseService = new DatabaseService();
+$conn = $databaseService->getConnection();
+
+if (!isset($_SESSION['token'])) {
+    $_SESSION['logout_token'] = "Login session expired";
+    header('Location: login.php');
+    exit();
+} else {
+    $email = $_SESSION['email'];
+    $user = "SELECT * FROM users WHERE email = :email";
+
+    $stmt = $conn->prepare($user);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $role = $row['role'];
+    if ($role != 2) {
+        header('Location: homepage.php');
+        exit();
+    }
 }
 ?>
-
-
 
 
 <body>

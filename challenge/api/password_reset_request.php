@@ -29,7 +29,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($result) {
     $token = bin2hex(random_bytes(16));
     date_default_timezone_set('Asia/Ho_Chi_Minh');
-    $expiry = date('Y-m-d H:i:s', strtotime('+5 minute'));
+    $expiry = date('Y-m-d H:i:s', strtotime('+2 minute'));
     $insert_reset_password = $conn->prepare("INSERT INTO reset_passwords (email, token_expiry, verify_token) VALUES (:email, :expiry, :token)");
 
     $insert_reset_password->bindParam(":email", $email);

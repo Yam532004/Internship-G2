@@ -86,4 +86,23 @@ require_once 'layouts/header.php';
             this.setAttribute('type', 'password');
         }
     });
+//  rewwrite
+
+document.getElementById('new_password').addEventListener('input', function() {
+    if (this.getAttribute('type') !== 'password') {
+        this.setAttribute('type', 'password');
+    }
+    const newPasswordIcon = document.getElementById('toggleRepeat_password');
+    newPasswordIcon.classList.remove('fa-eye');
+    newPasswordIcon.classList.add('fa-eye-slash');
+})
+document.getElementById('new_password').addEventListener('click', function() {
+    const newPasswordInput = document.getElementById('new_password');
+    const type = newPasswordInput.getAttribute('type') === 'password'? 'text' : 'password';
+    newPasswordInput.setAttribute('type', type);
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+
+})
+
 </script>

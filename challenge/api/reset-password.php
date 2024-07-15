@@ -37,8 +37,9 @@ if (isset($_GET['email']) && isset($_GET['code']) && isset($_GET['expiry']) && i
     $current_time  = date('Y-m-d H:i:s');
     $current_timestamp = strtotime($current_time);
     $expiry_timestamp = strtotime($decryptedExpiry);
-    echo "current_timestamp:  ".$current_time;
-    echo "expiry_timestamp: ".$decryptedExpiry;
+    // echo "current_timestamp:  ".$current_timestamp;
+    // echo "expiry_timestamp: ".$expiry_timestamp;
+    // echo "so sanh: ". $current_timestamp > $expiry_timestamp;
 
     if ($current_timestamp > $expiry_timestamp) {
         $_SESSION['error_token'] = "Token expired";

@@ -1,9 +1,9 @@
 <?php require 'layouts/header.php';
 include '../config/database.php';
 
-header('Cache-Control: no-cache, no-store, must-revalidate');
-header('Pragma: no-cache');
-header('Expires: 0');
+// header('Cache-Control: no-cache, no-store, must-revalidate');
+// header('Pragma: no-cache');
+// header('Expires: 0');
 
 $databaseService = new DatabaseService();
 $conn = $databaseService->getConnection();
@@ -12,10 +12,10 @@ $conn = $databaseService->getConnection();
 session_start();
 require '../vendor/autoload.php';
 
-if (!isset($_SESSION['token'])) {
-  header('Location: login.php');
-  exit(0);
-} else {
+// if (!isset($_SESSION['token'])) {
+//   header('Location: login.php');
+//   exit();
+// } else {
   $email = $_SESSION['email'];
   $user = "SELECT *  FROM users WHERE email = :email";
 
@@ -32,12 +32,9 @@ if (!isset($_SESSION['token'])) {
     header('Location: homepage.php');
     exit();
   }
-}
+// }
 ?>
 <script>
-  if (tokenExpired) {
-    window.location.href = 'login.php';
-  }
   document.addEventListener('DOMContentLoaded', function() {
     var navbar = document.getElementById('navbar');
     var role = <?php echo json_encode($role); ?>;
@@ -52,7 +49,7 @@ if (!isset($_SESSION['token'])) {
       <div class="sidebar-mini">
         <div class="wrapper">
           <?php
-          include 'layouts/navbar.php'
+          require 'layouts/navbar.php';
           ?>
           <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="../../index3.html" class="brand-link">

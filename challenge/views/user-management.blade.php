@@ -1,5 +1,7 @@
 <?php include_once '../config/database.php';
-include_once '../config/dbconnect.php'
+include_once '../config/dbconnect.php';
+// session_start();
+
 ?>
 <div class="col-lg-12 col-md-12">
     <div class="content-wrapper">
@@ -191,7 +193,7 @@ include_once '../config/dbconnect.php'
     document.addEventListener('DOMContentLoaded', function() {
         var navbar = document.getElementById('navbar');
         var role = <?php echo json_encode($role); ?>;
-        
+
         if (role != 2) {
             navbar.classList.add('main-header');
         }

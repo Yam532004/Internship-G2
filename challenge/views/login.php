@@ -5,8 +5,8 @@ session_start();
 $errorMessage = isset($_SESSION['error']) ? $_SESSION['error'] : '';
 $oldEmail = isset($_SESSION['old_email']) ? $_SESSION['old_email'] : '';
 unset($_SESSION['old_email']);
-// Xóa thông báo lỗi sau khi hiển thị nó
 unset($_SESSION['error']);
+// echo isset($_SESSION['logout_token'])? $_SESSION['logout_token'] : "khong co";
 ?>
 
 <div class="container mt-5">
@@ -23,7 +23,7 @@ unset($_SESSION['error']);
             <div class="form-group">
               <label for="email">Email address <span style="color:red">(*)</span></label>
               <div class="input-group">
-              <input type="email" name="email" class="form-control" id="email" value="<?php echo $oldEmail; ?>">
+                <input type="email" name="email" class="form-control" id="email" value="<?php echo $oldEmail; ?>">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                 </div>
@@ -104,24 +104,29 @@ unset($_SESSION['error']);
       toastr.success('<?php echo $_SESSION['reset_password'] ?>');
       <?php unset($_SESSION['reset_password']); ?>
     <?php endif; ?>
+
+    <?php if (isset($_SESSION['logout_token'])) : ?>
+      toastr.error('<?php echo $_SESSION['logout_token'] ?>');
+      <?php unset($_SESSION['logout_token']); ?>
+    <?php endif; ?>
   });
 </script>
 <script>
-document.getElementById('login_password').addEventListener('input', function() {
-        if (this.getAttribute('type') !== 'password') {
-            this.setAttribute('type', 'password');
-        }
-        const passwordIcon = document.getElementById('toggleLogin_password');
-        passwordIcon.classList.remove('fa-eye');
-        passwordIcon.classList.add('fa-eye-slash');
-    });
+  document.getElementById('login_password').addEventListener('input', function() {
+    if (this.getAttribute('type') !== 'password') {
+      this.setAttribute('type', 'password');
+    }
+    const passwordIcon = document.getElementById('toggleLogin_password');
+    passwordIcon.classList.remove('fa-eye');
+    passwordIcon.classList.add('fa-eye-slash');
+  });
 
-    // Chức năng toggle mật khẩu khi nhấp vào icon mắt
-    document.getElementById('toggleLogin_password').addEventListener('click', function() {
-        const passwordInput = document.getElementById('login_password');
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-    });
+  // Chức năng toggle mật khẩu khi nhấp vào icon mắt
+  document.getElementById('toggleLogin_password').addEventListener('click', function() {
+    const passwordInput = document.getElementById('login_password');
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+  });
 </script>
