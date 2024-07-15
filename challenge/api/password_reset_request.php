@@ -28,7 +28,8 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($result) {
     $token = bin2hex(random_bytes(16));
-    $expiry = date('Y-m-d H:i:s', strtotime('+1 minute'));
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+    $expiry = date('Y-m-d H:i:s', strtotime('+5 minute'));
     $insert_reset_password = $conn->prepare("INSERT INTO reset_passwords (email, token_expiry, verify_token) VALUES (:email, :expiry, :token)");
 
     $insert_reset_password->bindParam(":email", $email);
@@ -59,16 +60,16 @@ if ($result) {
         $_SESSION['token'] = $encodedToken;
         $_SESSION['status'] = 'Success to send the request.';
         header('Location: ../views/reset-password.php');
+        // echo "http://localhost:3000/api/reset-password.php?email=$encryptedEmail&code=$encodedToken&expiry=$encodedExpiry&encodeKey=$encodeKey";
     } else {
         $_SESSION['error_email'] = 'Failed to send token';
         // header('Location: reset-password.php');
         // exit(0);  // or use echo
         echo 'Failed to send token';
     }
-}else{
+} else {
     $_SESSION['error_email'] = "Email does not exist or is locked. You have to input your email address in the system";
     header("Location: ../views/reset-password.php");
-
 }
 
 
@@ -85,8 +86,8 @@ function send_password_reset($email, $encryptedEmail, $encodedToken, $encodedExp
         $mail->Host       = 'smtp.gmail.com'; // Set the SMTP server to send through
         $mail->SMTPAuth   = true; // Enable SMTP authentication
         $mail->Username   = 'am.y25@student.passerellesnumeriques.org'; // SMTP username
-        $mail->Password   = 'yuea jvpj voow qcmm'; // SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption
+        $mail->Password   = 'cnwn naqq gyzb avzz'; // SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587; // TCP port to connect to
 
         // Sender and reply-to address

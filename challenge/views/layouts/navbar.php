@@ -17,75 +17,49 @@ $role = '';
 
 if ($jwt) {
     try {
-        // Decode JWT token
         $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
 
         // Access user data from decoded token
         $user_id = $decoded->data->id;
         $username = $decoded->data->username;
         $email = $decoded->data->email;
+
         $role = $decoded->data->role;
-        $exp = $decoded->exp;
-        $current_time = time(); // Current timestamp
-        if ($current_time > $exp) {
-            // Token expired, unset session and redirect to login page
-            session_unset();
-            session_destroy();
-            header('Location:../views/login.php');
-            exit();
-        }
+
+        $_SESSION['email'] = $email;
     } catch (Exception $e) {
-        // Handle any exceptions
         session_unset();
         session_destroy();
-        header('Location:../views/login.php');
-        exit();
     }
+} else {
+    session_unset();
+    session_destroy();
+    header('Location:../views/login.php');
+    exit(0);
 }
 ?>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var navbar = document.getElementById('navbar');
-        var role = <?php echo json_encode($role); ?>;
-        if (role != 2) {
-            navbar.classList.remove('main-header');
-        }
-    });
-</script>
+
+
 <body>
     <div class="container-fluid">
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="navbar">
+        <nav class="navbar navbar-expand navbar-white navbar-light" id="navbar">
             <!-- Left navbar links -->
             <div class="row">
                 <div class="col-7">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" id="toggleMenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                        </li>
+
                         <li class="nav-item d-none d-sm-inline-block">
-                            <a href="index3.html" class="nav-link">Home</a>
+                            <a href="homepage.php" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item d-none d-sm-inline-block">
                             <a href="#" class="nav-link">Contact</a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-5">
-                    <!-- SEARCH FORM -->
-                    <form class="form-inline ml-3 mt-1">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-navbar" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+
             </div>
 
             <!-- Right navbar links -->
@@ -103,7 +77,10 @@ if ($jwt) {
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">
-                                    <i class="fas fa-envelope mr-2"></i> <?php echo $email; ?>
+                                    <i class="fas fa-envelope mr-2"></i> <?php
+                                                                            $shortEmail = (strlen($email) > 10) ? substr($email, 0, 20) . '...' : $email;
+                                                                            echo htmlspecialchars($shortEmail, ENT_QUOTES, 'UTF-8');
+                                                                            ?>
                                 </a>
                                 <div class="dropdown-divider"></div>
 

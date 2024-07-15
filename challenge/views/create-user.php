@@ -10,95 +10,121 @@
                     <span class="float-right" aria-hidden="true">×</span>
                 </button>
             </div>
-            <form action="../api/register.php" id="myform" method="post">
+            <form action="../api/create.php" id="myform" method="post">
                 <div class="modal-body">
                     <div class="card-body container">
                         <input type="hidden" id="token" name="token">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <p class="text-left" for="username">Full name </p>
-                                    <input type="text" name="username" class="form-control" id="username" placeholder="Enter your name">
-                                    <span class="error float-left"></span>
+                                    <label style="float: left;" for="username">Name <span style="color:red">(*)</span></label>
+                                    <div class="input-group">
+                                        <input type="text" name="username" class="form-control" id="username" placeholder="Enter your name">
+                                    </div>
+                                    <label style="float: left;" id="username-error" class="error" for="username"></label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <p class="text-left" for="email">Email address</p>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
-                                    <span class="error float-left"></span>
+                                    <label style="float: left;" for="email">Email address <span style="color:red">(*)</span></label>
+                                    <div class="input-group">
+                                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        </div>
+                                    </div>
+                                    <label style="float: left;" id="email-error" class="error" for="email"></label>
                                 </div>
                             </div>
                             <div class="col-6">
+
                                 <div class="form-group">
-                                    <p class="text-left" for="phone_number">Phone number</p>
-                                    <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter phone number">
-                                    <span class="error float-left "></span>
+                                    <label style="float: left;" for="phone_number">Phone number <span style="color:red">(*)</span></label>
+                                    <div class="input-group">
+                                        <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter phone number">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+                                        </div>
+                                    </div>
+                                    <label style="float: left;" id="phone_number-error" class="error" for="phone_number"></label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-12">
                                 <div class="form-group">
-                                    <p class="text-left" for="password">Password</p>
-                                    <div class="container">
-                                        <div class="row">
-                                            <input type="text" name="password" class="form-control col-10" id="password" placeholder="Password">
-                                            <span class="input-group-text col-2"><i class="far fa-eye-slash" id="togglePassword"></i></span>
-                                            <span class="error float-left"></span>
+                                    <label style="float: left;" for="password">Password <span style="color:red">(*)</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="password" id="password" autocomplete="off">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-eye-slash" id="togglePassword"></i></span>
                                         </div>
                                     </div>
+                                    <label style="float: left;" id="password-error" class="error" for="password"></label>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="form-group mb-2">
-                                    <p class="text-left" for="confirm_password">Confirm Password</p>
-                                    <div class="container">
-                                        <div class="row">
-                                            <input type="text" name="confirm_password" class="form-control col-10" id="confirm_password" placeholder="Confirm password">
-                                            <span class="input-group-text col-2"><i class="far fa-eye-slash" id="toggleConfirm_Password"></i></span>
-                                            <span class="error float-left "></span>
+                                <div class="form-group">
+                                    <label style="float: left;" for="confirm_password">Confirm Password <span style="color:red">(*)</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="confirm_password" id="confirm_password" autocomplete="off">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleConfirm_Password"></i></span>
                                         </div>
                                     </div>
+                                    <label style="float: left;" id="confirm_password-error" class="error" for="confirm_password"></label>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between d-flex">
-                    <button type="submit" class="btn btn-primary">Create</button>
+                <div class="modal-footer justify-content-between float-right">
+                    <button type="submit" style="width: fit-content;" class="btn btn-primary ">Create</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <Script>
-    const toggleConfirm_Password = document.querySelector('#toggleConfirm_Password')
-    const confirm_password = document.querySelector("#confirm_password");
 
-    const togglePassword = document.querySelector("#togglePassword");
-    const password = document.querySelector("#password");
-
-    togglePassword.addEventListener("click", function() {
-
-        // toggle the type attribute
-        const type = password.getAttribute("type") === "password" ? "text" : "password";
-        password.setAttribute("type", type);
-
-        // toggle the eye icon
-        this.classList.toggle('fa-eye');
+    // Tự động đặt lại type của input là 'password' khi người dùng nhập liệu
+    document.getElementById('password').addEventListener('input', function() {
+        if (this.getAttribute('type') !== 'password') {
+            this.setAttribute('type', 'password');
+        }
+        const passwordIcon = document.getElementById('togglePassword');
+        passwordIcon.classList.remove('fa-eye');
+        passwordIcon.classList.add('fa-eye-slash');
     });
 
-    toggleConfirm_Password.addEventListener("click", function() {
-
-        // toggle the type attribute
-        const type = confirm_password.getAttribute("type") === "password" ? "text" : "password";
-        confirm_password.setAttribute("type", type);
-
-        // toggle the eye icon
+    // Chức năng toggle mật khẩu khi nhấp vào icon mắt
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
         this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
     });
+
+    document.getElementById('confirm_password').addEventListener('input', function() {
+        if (this.getAttribute('type') !== 'password') {
+            this.setAttribute('type', 'password');
+        }
+        const passwordIcon = document.getElementById('toggleConfirm_Password');
+        passwordIcon.classList.remove('fa-eye');
+        passwordIcon.classList.add('fa-eye-slash');
+    });
+
+    // Chức năng toggle mật khẩu khi nhấp vào icon mắt
+    document.getElementById('toggleConfirm_Password').addEventListener('click', function() {
+        const passwordInput = document.getElementById('confirm_password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
 </Script>

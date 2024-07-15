@@ -69,7 +69,7 @@ $stmt->bindParam(':created_at', $created_at);
 
 if ($stmt->execute()) {
     $_SESSION['create_success'] = "User create successfully.";
-    header('Location: ../views/login.php');
+    header('Location: ../views/sidebar.php');
     exit;
 } else {
     // http_response_code(400);

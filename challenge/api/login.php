@@ -80,7 +80,7 @@ if ($num > 0) {
         $audience_claim = "THE_AUDIENCE";
         $issuedat_claim = time(); // issued at
         $notbefore_claim = $issuedat_claim; // not before in seconds
-        $expire_claim = $issuedat_claim + 300; // expire time in seconds
+        $expire_claim = $issuedat_claim + 20; // expire time in seconds
         $token = array(
             "iss" => $issuer_claim,
             "aud" => $audience_claim,
@@ -99,6 +99,7 @@ if ($num > 0) {
         $jwt = JWT::encode($token, $secret_key, 'HS256');
         $_SESSION['login_success'] = "User was successfully login.";
         $_SESSION['token'] = $jwt;
+        $_SESSION['email'] = $email;
         if ($role == 2) {
             header('Location: ../views/sidebar.php');
             exit();

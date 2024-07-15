@@ -10,12 +10,14 @@ include 'layouts/header.php'
                 <div class="card-header">
                     <h3 class="card-title">Sign up</h3>
                 </div>
-                <form id="myform" action="../api/register.php" method="post" accept-charset="UTF-8">
+                <form id="myform" action="../api/register.php" method="post" accept-charset="UTF-8" >
                     <div class="card-body container">
                         <input type="hidden" id="token" name="token">
                         <div class="form-group">
                             <label for="username">Name <span style="color:red">(*)</span></label>
-                            <input type="username" name="username" class="form-control" id="username">
+                            <div class="input-group">
+                                <input type="username" name="username" class="form-control" id="username">
+                            </div>
                             <label id="username-error" class="error" for="username"></label>
                         </div>
                         <div class="row">
@@ -51,7 +53,7 @@ include 'layouts/header.php'
                                 <div class="form-group">
                                     <label for="password">Password <span style="color:red">(*)</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="password" id="password">
+                                        <input type="text" class="form-control" name="password" id="password" autocomplete="off">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-eye-slash" id="togglePassword"></i></span>
                                         </div>
@@ -64,7 +66,7 @@ include 'layouts/header.php'
                                 <div class="form-group">
                                     <label for="confirm_password">Confirm Password <span style="color:red">(*)</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="confirm_password" id="confirm_password">
+                                        <input type="text" class="form-control" name="confirm_password" id="confirm_password" autocomplete="off">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleConfirmPassword"></i></span>
                                         </div>
@@ -103,33 +105,43 @@ include 'layouts/header.php'
 </div>
 <script type="text/javascript" src="../assets/javascript/register.js"></script>
 <script>
-    var password = document.querySelector('#password');
-    var togglePassword = document.querySelector('#togglePassword');
-    togglePassword.addEventListener('click', function() {
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
 
-    })
-
-    password.addEventListener('input', function() {
+    // Tự động đặt lại type của input là 'password' khi người dùng nhập liệu
+    document.getElementById('password').addEventListener('input', function() {
         if (this.getAttribute('type') !== 'password') {
             this.setAttribute('type', 'password');
         }
+        const passwordIcon = document.getElementById('togglePassword');
+        passwordIcon.classList.remove('fa-eye');
+        passwordIcon.classList.add('fa-eye-slash');
     });
 
-    var confirm_password = document.querySelector('#confirm_password');
-    var toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
-    toggleConfirmPassword.addEventListener('click', function() {
-        const type = confirm_password.getAttribute('type') === 'password' ? 'text' : 'password';
-        confirm_password.setAttribute('type', type);
+    // Chức năng toggle mật khẩu khi nhấp vào icon mắt
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
         this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
 
-    })
-
-    confirm_password.addEventListener('input', function() {
+    document.getElementById('confirm_password').addEventListener('input', function() {
         if (this.getAttribute('type') !== 'password') {
             this.setAttribute('type', 'password');
         }
+        const passwordIcon = document.getElementById('toggleConfirmPassword');
+        passwordIcon.classList.remove('fa-eye');
+        passwordIcon.classList.add('fa-eye-slash');
     });
+
+    // Chức năng toggle mật khẩu khi nhấp vào icon mắt
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('confirm_password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
+
 </script>

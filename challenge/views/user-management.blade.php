@@ -51,17 +51,14 @@ include_once '../config/dbconnect.php'
                                                     <tbody>
 
                                                     </tbody>
+                                                </table>
                                             </div>
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-                        </thead>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -138,14 +135,13 @@ include_once '../config/dbconnect.php'
                     let users = response.data; // Adjust this based on your API response structure
                     let totalRecords = response.totalRecords; // Adjust this based on your API response structure
                     let tableData = [];
-                    console.log(response)
                     if (users.length > 0) {
                         users.forEach(function(user) {
                             let row = [
                                 user.id,
                                 user.username,
                                 user.email,
-                                "0"+user.phone_number,
+                                "0" + user.phone_number,
                                 user.email !== "<?php echo $email ?>" ? `
         <form method="POST" action="../api/is_locked.php" id="lockForm_${user.id}">
             <div class="form-check form-switch d-flex justify-content-center text-center">
@@ -154,7 +150,7 @@ include_once '../config/dbconnect.php'
             </div>
         </form>
     ` : '',
-                                user.email !== "<?php echo $email ?>" ? `
+                                user.email !== "<?php echo $email ?>" ? `   
         <div class="text-center d-flex justify-content-center">
             <button type="button" onclick="editModal(${user.id}, 'api/get-user.php?id=${user.id}', 'api/edit-user.php')" title="Edit user" class="btn btn-sm btn-warning col-2 d-flex justify-content-center align-items-center" data-toggle="modal" data-target="#editModal">
                 <i class="fa fa-edit"></i>
@@ -188,6 +184,16 @@ include_once '../config/dbconnect.php'
                     });
                 }
             });
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var navbar = document.getElementById('navbar');
+        var role = <?php echo json_encode($role); ?>;
+        
+        if (role != 2) {
+            navbar.classList.add('main-header');
         }
     });
 </script>

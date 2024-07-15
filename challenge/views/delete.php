@@ -13,8 +13,15 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-6">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal"> <a href="sidebar.php" style="text-decoration: none; color:aliceblue">
-                                No</a></button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="
+                                        var backdrop = document.getElementsByClassName('modal-backdrop')[0]; 
+                                        console.log(backdrop);
+                                        if (backdrop) {
+                                            backdrop.classList.remove('modal-backdrop');
+                                        }
+                                ">
+                                    No
+                                </button>
                             </div>
                             <div class="col-6">
                                 <button type="submit" class="btn btn-primary">Yes</button>

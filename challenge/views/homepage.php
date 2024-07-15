@@ -68,7 +68,7 @@ if (isset($_SESSION['alert'])) {
                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <button type="button" style="width:fit-content" class="btn btn-primary d-flex flex-row-reverse schedule">Get Schedule >>></button>
+            <button type="button" style="width:fit-content" class="btn btn-primary d-flex flex-row-reverse schedule">Get Schedule</button>
         </div>
     </div>
 </div>

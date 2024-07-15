@@ -3,6 +3,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Edit</h4>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close" onclick="
+                                        var backdrop = document.getElementsByClassName('modal-backdrop')[0]; 
+                                        console.log(backdrop);
+                                        if (backdrop) {
+                                            backdrop.classList.remove('modal-backdrop');
+                                        }
+                                ">
+                    <span class="float-right" aria-hidden="true">×</span>
+                </button>
             </div>
             <form action="" id="form_modal_edit" method="POST">
                 <div class="modal-body">
@@ -51,7 +60,7 @@
                                     <label for="edit_password">Password</label>
                                     <div class="input-group">
 
-                                        <input type="text" name="password" class="form-control" id="edit_password" placeholder="Enter password">
+                                        <input type="text" name="password" class="form-control" id="edit_password" placeholder="Enter password" autocomplete="off">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleEdit_password"></i></span>
                                         </div>
@@ -66,9 +75,9 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-6">
-                                    <a href="sidebar.php" style="text-decoration: none">
-                                        Back to sidebar</a>
+                                    
                                 </div>
+
                                 <div class="col-6 pr-0">
                                     <button type="submit" style="width: fit-content;" class="saveEdit btn btn-primary btn-block float-right">Save Changes</button>
                                 </div>
@@ -84,12 +93,21 @@
 </div>
 </div>
 <script>
-    var edit_password = document.querySelector('#edit_password');
-    var toggleEdit_password = document.querySelector('#toggleEdit_password');
-    toggleEdit_password.addEventListener('click', function() {
-        const type = edit_password.getAttribute('type') === 'password' ? 'text' : 'password';
-        edit_password.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
+    document.getElementById('edit_password').addEventListener('input', function() {
+        if (this.getAttribute('type') !== 'password') {
+            this.setAttribute('type', 'password');
+        }
+        const passwordIcon = document.getElementById('toggleEdit_password');
+        passwordIcon.classList.remove('fa-eye');
+        passwordIcon.classList.add('fa-eye-slash');
+    });
 
-    })
+    // Chức năng toggle mật khẩu khi nhấp vào icon mắt
+    document.getElementById('toggleEdit_password').addEventListener('click', function() {
+        const passwordInput = document.getElementById('edit_password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
 </script>

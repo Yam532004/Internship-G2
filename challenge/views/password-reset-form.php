@@ -14,31 +14,28 @@ require_once 'layouts/header.php';
                     <div class="card-body">
                         <div class="form-group">
                             <div class="container">
-                                <div class="row">
-                                    <label for="new_password">New Password</label>
+                                <input type="hidden" name="token" id="token" value="<?php echo !empty($_SESSION['token']) ? $_SESSION['token'] : "No token" ?>">
 
-                                    <input type="hidden" name="token" id="token" value="<?php echo !empty($_SESSION['token']) ? $_SESSION['token'] : "No token" ?>">
-
-                                    <input name="email" type="hidden" value="<?php echo !empty($_SESSION['email']) ? $_SESSION['email'] : "No email"; ?>">
-                                    <div class="conatiner">
-                                        <div class="row">
-                                            <input type="text" name="new_password" class="form-control col-11" id="new_password" placeholder="Enter new password">
-                                            <span class="input-group-text col-1"><i class="far fa-eye-slash " id="toggleNew_password"></i></span>
-                                            <span class="error"></span>
+                                <input name="email" type="hidden" value="<?php echo !empty($_SESSION['email']) ? $_SESSION['email'] : "No email"; ?>">
+                                <div class="form-group">
+                                    <label for="password">Password <span style="color:red">(*)</span></label>
+                                    <div class="input-group">
+                                        <input type="text" name="new_password" class="form-control col-11" id="new_password" placeholder="Enter new password" autocomplete="off">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleNew_password"></i></span>
                                         </div>
                                     </div>
+                                    <label id="new_password-error" class="error" for="new_password"></label>
                                 </div>
-                                <div class="row">
-                                    <label for="repeat_password">Repeat Password</label>
-
-                                    <div class="conatiner">
-                                        <div class="row">
-                                            <input type="text" name="repeat_password" class="form-control col-11" id="repeat_password" placeholder="Repeat password">
-                                            <span class="input-group-text col-1"><i class="far fa-eye-slash" id="toggleRepeat_password"></i></span>
-                                            <span class="error"></span>
+                                <div class="form-group">
+                                    <label for="repeat_password">Repeat Password <span style="color:red">(*)</span></label>
+                                    <div class="input-group">
+                                    <input type="text" name="repeat_password" class="form-control col-11" id="repeat_password" placeholder="Repeat password" autocomplete="off">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleRepeat_password"></i></span>
                                         </div>
                                     </div>
-
+                                    <label id="repeat_password-error" class="error" for="repeat_password"></label>
                                 </div>
                             </div>
                         </div>
@@ -77,4 +74,16 @@ require_once 'layouts/header.php';
         this.classList.toggle('fa-eye');
 
     })
+
+    new_password.addEventListener('input', function() {
+        if (this.getAttribute('type') !== 'password') {
+            this.setAttribute('type', 'password');
+        }
+    });
+
+    repeat_password.addEventListener('input', function() {
+        if (this.getAttribute('type') !== 'password') {
+            this.setAttribute('type', 'password');
+        }
+    });
 </script>

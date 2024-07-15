@@ -21,14 +21,20 @@ unset($_SESSION['error']);
           <div class="card-body container">
             <input type="hidden" id="token" name="token">
             <div class="form-group">
-              <label for="email">Email address <span style="color:red">(*)</span> </label>
+              <label for="email">Email address <span style="color:red">(*)</span></label>
+              <div class="input-group">
               <input type="email" name="email" class="form-control" id="email" value="<?php echo $oldEmail; ?>">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                </div>
+              </div>
               <label id="email-error" class="error" for="email"></label>
             </div>
+
             <div class="form-group">
               <label for="password">Password <span style="color:red">(*)</span></label>
               <div class="input-group">
-                <input type="text" class="form-control" name="password" id="login_password">
+                <input type="text" class="form-control" name="password" id="login_password" autocomplete="off">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleLogin_password"></i></span>
                 </div>
@@ -101,18 +107,21 @@ unset($_SESSION['error']);
   });
 </script>
 <script>
-  var login_password = document.querySelector('#login_password');
-  var toggleLogin_password = document.querySelector('#toggleLogin_password');
-  toggleLogin_password.addEventListener('click', function() {
-    const type = login_password.getAttribute('type') === 'password' ? 'text' : 'password';
-    login_password.setAttribute('type', type);
-    this.classList.toggle('fa-eye');
+document.getElementById('login_password').addEventListener('input', function() {
+        if (this.getAttribute('type') !== 'password') {
+            this.setAttribute('type', 'password');
+        }
+        const passwordIcon = document.getElementById('toggleLogin_password');
+        passwordIcon.classList.remove('fa-eye');
+        passwordIcon.classList.add('fa-eye-slash');
+    });
 
-  })
-
-  login_password.addEventListener('input', function() {
-    if (this.getAttribute('type') !== 'password') {
-      this.setAttribute('type', 'password');
-    }
-  });
+    // Chức năng toggle mật khẩu khi nhấp vào icon mắt
+    document.getElementById('toggleLogin_password').addEventListener('click', function() {
+        const passwordInput = document.getElementById('login_password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
 </script>
