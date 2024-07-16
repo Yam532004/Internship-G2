@@ -24,6 +24,7 @@ if (isset($_POST['email']) && isset($_POST['new_password'])) {
     // Check if update was successful
     if ($result) {
         $_SESSION['reset_password'] ='Successfully updated password';
+        unset($_SESSION['reset_link']);
         header('Location:../views/login.php');
     } else {
         // Check if email was not found

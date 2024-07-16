@@ -4,15 +4,14 @@ require 'layouts/header.php';
 session_start();
 require '../vendor/autoload.php';
 
-include "layouts/navbar.php";
-
-
 // Kiểm tra và hiển thị thông báo nếu có
 if (isset($_SESSION['alert'])) {
     unset($_SESSION['alert']);
     // Xóa thông báo sau khi đã hiển thị
     echo $_SESSION['alert'];
 }
+include_once "layouts/navbar.php";
+
 ?>
 
 <div class="container mt-2" id="content">
@@ -68,7 +67,7 @@ if (isset($_SESSION['alert'])) {
                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <button type="button" style="width:fit-content" class="btn btn-primary d-flex flex-row-reverse schedule">Get Schedule</button>
+            <button type="button" style="width:fit-content" class="btn btn-primary d-flex flex-row-reverse schedule">Get Schedule >>></button>
         </div>
     </div>
 </div>

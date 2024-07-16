@@ -28,7 +28,7 @@ unset($_SESSION['error']);
                   <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                 </div>
               </div>
-              <label id="email-error" class="error" for="email"></label>
+              <label id="email-error" class="error" for="email" style="display:none"></label>
             </div>
 
             <div class="form-group">
@@ -40,7 +40,7 @@ unset($_SESSION['error']);
                 </div>
               </div>
               <span class="error"><b><?php echo $errorMessage ?></b></span>
-              <label id="login_password-error" class="error" for="login_password"></label>
+              <label id="login_password-error" class="error" for="login_password" style="display:none"></label>
             </div>
             <p> <a href="reset-password.php"><i>Forgot password</i></a>? Did you <a href="register.php"> not have an account? </a></i></p>
           </div>
@@ -108,6 +108,11 @@ unset($_SESSION['error']);
     <?php if (isset($_SESSION['logout_token'])) : ?>
       toastr.error('<?php echo $_SESSION['logout_token'] ?>');
       <?php unset($_SESSION['logout_token']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['die_link'])) : ?>
+      toastr.error('<?php echo $_SESSION['die_link'] ?>');
+      <?php unset($_SESSION['die_link']); ?>
     <?php endif; ?>
   });
 </script>

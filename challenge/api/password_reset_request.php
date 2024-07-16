@@ -2,6 +2,7 @@
 include_once '../config/database.php';
 
 session_start();
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -10,7 +11,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $databaseService = new DatabaseService();
 $conn = $databaseService->getConnection();
-
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -29,16 +29,25 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($result) {
     $token = bin2hex(random_bytes(16));
     date_default_timezone_set('Asia/Ho_Chi_Minh');
-    $expiry = date('Y-m-d H:i:s', strtotime('+2 minute'));
-    $insert_reset_password = $conn->prepare("INSERT INTO reset_passwords (email, token_expiry, verify_token) VALUES (:email, :expiry, :token)");
-
-    $insert_reset_password->bindParam(":email", $email);
-
-    $insert_reset_password->bindParam(":expiry", $expiry);
-
-    $insert_reset_password->bindParam(":token", $token);
-
-    $result = $insert_reset_password->execute();
+    $expiry = date('Y-m-d H:i:s', strtotime('+3 minute'));
+    $_SESSION['expiry'] = $expiry;
+    $select_reset_password = $conn->prepare('SELECT * FROM reset_passwords WHERE email = :email');
+    $select_reset_password->bindParam(':email', $email);
+    $select_reset_password->execute();
+    $row = $select_reset_password->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
+        $update_reset_password = $conn->prepare('UPDATE reset_passwords SET verify_token = :verify_token, token_expiry = :token_expiry WHERE email = :email');
+        $update_reset_password->bindParam(':verify_token', $token);
+        $update_reset_password->bindParam(':token_expiry', $expiry);
+        $update_reset_password->bindParam(':email', $email);
+        $result = $update_reset_password->execute();
+    } else {
+        $insert_reset_password = $conn->prepare('INSERT INTO reset_passwords (email, token_expiry, verify_token) VALUES (:email, :token_expiry, :verify_token)');
+        $insert_reset_password->bindParam(':email', $email);
+        $insert_reset_password->bindParam(':token_expiry', $expiry);
+        $insert_reset_password->bindParam(':verify_token', $token);
+        $result = $insert_reset_password->execute();
+    }
     function encrypt($data, $key)
     {
         $cipher = "AES-256-CBC";
@@ -65,7 +74,6 @@ if ($result) {
         $_SESSION['error_email'] = 'Failed to send token';
         // header('Location: reset-password.php');
         // exit(0);  // or use echo
-        echo 'Failed to send token';
     }
 } else {
     $_SESSION['error_email'] = "Email does not exist or is locked. You have to input your email address in the system";
@@ -99,7 +107,7 @@ function send_password_reset($email, $encryptedEmail, $encodedToken, $encodedExp
         $mail->isHTML(true);
         $mail->Subject = 'Reset Password';
         $reset_link = "http://localhost:3000/api/reset-password.php?email=$encryptedEmail&code=$encodedToken&expiry=$encodedExpiry&encodeKey=$encodeKey";
-        // HTML email template
+        $_SESSION['reset_link'] = $reset_link;
         $mail->Body = "
         <h2>Reset Password Request</h2>
         <p>Hello $email ,</p>

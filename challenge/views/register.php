@@ -18,7 +18,7 @@ include 'layouts/header.php'
                             <div class="input-group">
                                 <input type="username" name="username" class="form-control" id="username">
                             </div>
-                            <label id="username-error" class="error" for="username"></label>
+                            <label id="username-error" class="error" for="username" style="display:none"></label>
                         </div>
                         <div class="row">
                             <div class="col-6">
@@ -30,7 +30,7 @@ include 'layouts/header.php'
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                         </div>
                                     </div>
-                                    <label id="email-error" class="error" for="email"></label>
+                                    <label id="email-error" class="error" for="email" style="display:none"></label>
                                 </div>
 
                             </div>
@@ -44,7 +44,7 @@ include 'layouts/header.php'
                                             <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
                                         </div>
                                     </div>
-                                    <label id="phone_number-error" class="error" for="phone_number"></label>
+                                    <label id="phone_number-error" class="error" for="phone_number" style="display:none"></label>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@ include 'layouts/header.php'
                                             <span class="input-group-text"><i class="fas fa-eye-slash" id="togglePassword"></i></span>
                                         </div>
                                     </div>
-                                    <label id="password-error" class="error" for="password"></label>
+                                    <label id="password-error" class="error" for="password" style="display:none"></label>
                                 </div>
                             </div>
 
@@ -71,7 +71,7 @@ include 'layouts/header.php'
                                             <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleConfirmPassword"></i></span>
                                         </div>
                                     </div>
-                                    <label id="confirm_password-error" class="error" for="confirm_password"></label>
+                                    <label id="confirm_password-error" class="error" for="confirm_password" style="display:none"></label>
                                 </div>
                             </div>
 

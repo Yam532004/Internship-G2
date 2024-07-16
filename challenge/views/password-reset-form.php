@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once 'layouts/header.php';
+if (!isset($_SESSION['reset_link'])){
+    header("Location: reset-password.php");
+    exit();
+}
 ?>
 <div class="container mt-5">
     <div class="row">
@@ -25,7 +29,7 @@ require_once 'layouts/header.php';
                                             <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleNew_password"></i></span>
                                         </div>
                                     </div>
-                                    <label id="new_password-error" class="error" for="new_password"></label>
+                                    <label id="new_password-error" class="error" for="new_password" style="display:none"></label>
                                 </div>
                                 <div class="form-group">
                                     <label for="repeat_password">Repeat Password <span style="color:red">(*)</span></label>
@@ -35,7 +39,7 @@ require_once 'layouts/header.php';
                                             <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleRepeat_password"></i></span>
                                         </div>
                                     </div>
-                                    <label id="repeat_password-error" class="error" for="repeat_password"></label>
+                                    <label id="repeat_password-error" class="error" for="repeat_password" style="display:none"></label>
                                 </div>
                             </div>
                         </div>

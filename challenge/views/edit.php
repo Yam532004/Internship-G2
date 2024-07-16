@@ -25,7 +25,7 @@
                                     <div class="input-group">
                                         <input type="text" name="username" class="form-control" id="edit_username" placeholder="Enter your name">
                                     </div>
-                                    <label id="edit_username-error" class="error" for="edit_username"></label>
+                                    <label id="edit_username-error" class="error" for="edit_username" style="display:none"></label>
                                     </span>
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                                             <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
                                         </div>
                                     </div>
-                                    <label id="edit_phone_number-error" class="error" for="edit_phone_number"></label>
+                                    <label id="edit_phone_number-error" class="error" for="edit_phone_number" style="display:none"></label>
                                 </div>
                             </div>
                         </div>
@@ -52,20 +52,20 @@
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                         </div>
                                     </div>
-                                    <label id="edit_email-error" class="error" for="edit_email"></label>
+                                    <label id="edit_email-error" class="error" for="edit_email" style="display:none"></label>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="edit_password">Password</label>
                                     <div class="input-group">
-
                                         <input type="text" name="password" class="form-control" id="edit_password" placeholder="Enter password" autocomplete="off">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleEdit_password"></i></span>
                                         </div>
-                                        <span class="error text-left"></span>
-                                    </div>
+                                        <!-- <span class="error text-left"></span> -->
+                                    </div>  
+                                    <label id="edit_password-error" class="error" for="edit_password" style="display:none"></label>
                                 </div>
                             </div>
                         </div>
