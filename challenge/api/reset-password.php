@@ -11,65 +11,84 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $databaseService = new DatabaseService();
 $conn = $databaseService->getConnection();
 
-if (isset($_GET['email']) && isset($_GET['code']) && isset($_GET['expiry']) && isset($_GET['encodeKey'])) {
+if (isset($_GET['t'])) {
+    $token = $_GET['t'];
+    $sql = "SELECT * FROM reset_passwords WHERE verify_token =:token";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':token', $token);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($row !== false) {
+        // Token đã tồn tại trong hệ thống
+        $email = $row['email'];
+        $expiry = $row['token_expiry'];
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $current_timestamp = date('Y-m-d H:i:s');
+        $current_time = new DateTime($current_timestamp);
+        $expiry_time = new DateTime($expiry);
 
-    function decrypt($data, $key)
-    {
-        $cipher = "aes-256-cbc";
-        $ivlen = openssl_cipher_iv_length($cipher);
-        $data = base64_decode($data);
-        $iv = substr($data, 0, $ivlen);
-        $ciphertext = substr($data, $ivlen);
-        return openssl_decrypt($ciphertext, $cipher, $key, $options = 0, $iv);
-    }
+        $current_time_stamp = $current_time->format('Y-m-d H:i:s');
+        $expiry_time_stamp = $expiry_time->format('Y-m-d H:i:s');
 
-    $encodeKey = $_GET['encodeKey'];
-    $email = $_GET['email'];
-    $code = $_GET['code'];
-    $expiry = $_GET['expiry'];
-    $decryptedEmail = decrypt($email, $encodeKey);
-    $decryptedCode = decrypt($code, $encodeKey);
-    $decryptedExpiry = decrypt($expiry, $encodeKey);
-
-    date_default_timezone_set('Asia/Ho_Chi_Minh');
-    $current_timestamp = date('Y-m-d H:i:s');
-
-    // Chuyển đổi $current_timestamp và $decryptedExpiry thành đối tượng DateTime
-    $current_time = new DateTime($current_timestamp);
-    $expiry_time = new DateTime($_SESSION['expiry']);
-
-    $current_time_stamp = $current_time->format('Y-m-d H:i:s');
-    $expiry_time_stamp = $expiry_time->format('Y-m-d H:i:s');
-
-    if ($current_time_stamp > $expiry_time_stamp) {
-        // Nếu đã hết phiên
-        $_SESSION['error_token'] = "Token link expired ";
-        unset($_SESSION['reset_link']);
-        header('Location: ../views/reset-password.php');
-        exit();
-    } elseif (isset($_SESSION['reset_link'])) {
-            $stmt = $conn->prepare("SELECT * FROM reset_passwords WHERE email = :email ");
-            // AND verify_token = :code AND token_expiry = :expiry
-            // $time_expiry = $expiry_time->format('Y-m-d H:i:s');
-            $stmt->bindParam(':email', $decryptedEmail);
-            // $stmt->bindParam(':code', $decryptedCode);
-            // $stmt->bindParam(':expiry', $expiry_time_stamp);
+        if ($current_time_stamp > $expiry_time_stamp) {
+            $sql = "DELETE FROM reset_passwords WHERE email = :email";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':email', $email);
             $stmt->execute();
-
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($row !== false) {
-                header('Location: ../views/password-reset-form.php');
-                exit();
-            } else {
-                $_SESSION['die_link'] = "Don't have case to reset password yet.";
-                header('Location: ../views/login.php');
-                exit();
-            }
+            $_SESSION['error_token'] = "Expired timestamp";
+            header('Location: ../views/reset-password.php');
+            exit();
         } else {
-            $_SESSION['die_link'] = "You already to change the password";
-            header('Location: ../views/login.php');
+            $_SESSION['email'] = $email;
+            header('Location:../views/password-reset-form.php');
             exit();
         }
+    } else {
+        // Token không tồn tại trong hệ thống
+        $_SESSION['error_token'] = "Token not found";
+        header('Location:../views/reset-password.php');
+        exit();
+    }
 } else {
-    echo 'Token is required';
+    $_SESSION['error_token'] = "Token is required";
+    header('Location:../views/reset-password.php');
+    exit();
 }
+    
+
+    // // Chuyển đổi $current_timestamp và $decryptedExpiry thành đối tượng DateTime
+    // $current_time = new DateTime($current_timestamp);
+    // $expiry_time = new DateTime($_SESSION['expiry']);
+
+    // $current_time_stamp = $current_time->format('Y-m-d H:i:s');
+    // $expiry_time_stamp = $expiry_time->format('Y-m-d H:i:s');
+
+    // if ($current_time_stamp > $expiry_time_stamp) {
+    //     // Nếu đã hết phiên
+    //     $_SESSION['error_token'] = "Token link expired ";
+    //     unset($_SESSION['reset_link']);
+    //     header('Location: ../views/reset-password.php');
+    //     exit();
+    // } elseif (isset($_SESSION['reset_link'])) {
+    //         $stmt = $conn->prepare("SELECT * FROM reset_passwords WHERE email = :email ");
+    //         // AND verify_token = :code AND token_expiry = :expiry
+    //         // $time_expiry = $expiry_time->format('Y-m-d H:i:s');
+    //         $stmt->bindParam(':email', $decryptedEmail);
+    //         // $stmt->bindParam(':code', $decryptedCode);
+    //         // $stmt->bindParam(':expiry', $expiry_time_stamp);
+    //         $stmt->execute();
+
+    //         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    //         if ($row !== false) {
+    //             header('Location: ../views/password-reset-form.php');
+    //             exit();
+    //         } else {
+    //             $_SESSION['die_link'] = "Don't have case to reset password yet.";
+    //             header('Location: ../views/login.php');
+    //             exit();
+    //         }
+    //     } else {
+    //         $_SESSION['die_link'] = "You already to change the password";
+    //         header('Location: ../views/login.php');
+    //         exit();
+    //     }

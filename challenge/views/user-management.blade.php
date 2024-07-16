@@ -147,7 +147,7 @@ include_once '../config/dbconnect.php';
                                 user.email !== "<?php echo $email ?>" ? `
         <form method="POST" action="../api/is_locked.php" id="lockForm_${user.id}">
             <div class="form-check form-switch d-flex justify-content-center text-center">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked_${user.id}" name="is_locked" value="${user.is_locked}" ${user.is_locked == 1 ? 'checked' : ''} onchange="document.getElementById('lockForm_${user.id}').submit();">
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked_${user.id}" name="is_locked" value="${user.is_locked}" ${user.is_locked == 0 ? 'checked' : ''} onchange="document.getElementById('lockForm_${user.id}').submit();">
                 <input type="hidden" name="id" value="${user.id}"/>
             </div>
         </form>

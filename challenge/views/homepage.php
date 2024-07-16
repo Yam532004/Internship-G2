@@ -11,9 +11,7 @@ if (isset($_SESSION['alert'])) {
     echo $_SESSION['alert'];
 }
 include_once "layouts/navbar.php";
-
 ?>
-
 <div class="container mt-2" id="content">
     <div class="row ">
         <div class="col-sm-6">
@@ -22,7 +20,7 @@ include_once "layouts/navbar.php";
                 such as handling, acceleration, top speed, the thrill of driving, and racing capability.
                 Sports cars originated in Europe in early 1910s and are currently produced by many manufacturers
                 around the world.</p>
-            <p>In the United Kingdom, early recorded usage of the "sports car" was in The Times newspaper in
+            <p>In the United Kingdom, early recorded usage ogf the "sports car" was in The Times newspaper in
                 1919.
 
                 The term initially described two-seat roadsters (cars without a fixed roof), however, since the

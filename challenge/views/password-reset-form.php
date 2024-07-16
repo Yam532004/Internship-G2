@@ -1,10 +1,6 @@
 <?php
 session_start();
 require_once 'layouts/header.php';
-if (!isset($_SESSION['reset_link'])){
-    header("Location: reset-password.php");
-    exit();
-}
 ?>
 <div class="container mt-5">
     <div class="row">
@@ -22,7 +18,7 @@ if (!isset($_SESSION['reset_link'])){
 
                                 <input name="email" type="hidden" value="<?php echo !empty($_SESSION['email']) ? $_SESSION['email'] : "No email"; ?>">
                                 <div class="form-group">
-                                    <label for="password">Password <span style="color:red">(*)</span></label>
+                                    <label for="new_password">Password <span style="color:red">(*)</span></label>
                                     <div class="input-group">
                                         <input type="text" name="new_password" class="form-control col-11" id="new_password" placeholder="Enter new password" autocomplete="off">
                                         <div class="input-group-prepend">
@@ -31,10 +27,11 @@ if (!isset($_SESSION['reset_link'])){
                                     </div>
                                     <label id="new_password-error" class="error" for="new_password" style="display:none"></label>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="repeat_password">Repeat Password <span style="color:red">(*)</span></label>
                                     <div class="input-group">
-                                    <input type="text" name="repeat_password" class="form-control col-11" id="repeat_password" placeholder="Repeat password" autocomplete="off">
+                                        <input type="text" name="repeat_password" class="form-control col-11" id="repeat_password" placeholder="Repeat password" autocomplete="off">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-eye-slash" id="toggleRepeat_password"></i></span>
                                         </div>
@@ -90,23 +87,22 @@ if (!isset($_SESSION['reset_link'])){
             this.setAttribute('type', 'password');
         }
     });
-//  rewwrite
+    //  rewwrite
 
-document.getElementById('new_password').addEventListener('input', function() {
-    if (this.getAttribute('type') !== 'password') {
-        this.setAttribute('type', 'password');
-    }
-    const newPasswordIcon = document.getElementById('toggleRepeat_password');
-    newPasswordIcon.classList.remove('fa-eye');
-    newPasswordIcon.classList.add('fa-eye-slash');
-})
-document.getElementById('new_password').addEventListener('click', function() {
-    const newPasswordInput = document.getElementById('new_password');
-    const type = newPasswordInput.getAttribute('type') === 'password'? 'text' : 'password';
-    newPasswordInput.setAttribute('type', type);
-    this.classList.toggle('fa-eye');
-    this.classList.toggle('fa-eye-slash');
+    document.getElementById('new_password').addEventListener('input', function() {
+        if (this.getAttribute('type') !== 'password') {
+            this.setAttribute('type', 'password');
+        }
+        const newPasswordIcon = document.getElementById('toggleRepeat_password');
+        newPasswordIcon.classList.remove('fa-eye');
+        newPasswordIcon.classList.add('fa-eye-slash');
+    })
+    document.getElementById('new_password').addEventListener('click', function() {
+        const newPasswordInput = document.getElementById('new_password');
+        const type = newPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        newPasswordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
 
-})
-
+    })
 </script>

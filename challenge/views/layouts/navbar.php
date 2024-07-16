@@ -1,11 +1,11 @@
 <?php
 require_once '../config/database.php';
+require_once 'header.php';
+require_once '../vendor/autoload.php';
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'header.php';
-
-require_once '../vendor/autoload.php';
 
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
@@ -45,7 +45,7 @@ $conn = $databaseService->getConnection();
 
 if (!isset($_SESSION['token'])) {
     $_SESSION['logout_token'] = "Login session expired";
-    header('Location: login.php');
+    header('Location: ../views/login.php');
     exit();
 } else {
     $email = $_SESSION['email'];
@@ -57,9 +57,15 @@ if (!isset($_SESSION['token'])) {
 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $role = $row['role'];
-    if ($role != 2) {
-        header('Location: homepage.php');
+    if ($row) {
+        $role = $row['role'];
+        if ($role != 2) {
+            header('Location: homepage.php');
+            exit();
+        }
+    } else {
+        $_SESSION['logout_token'] = "User not found.";
+        header('Location: ../views/login.php');
         exit();
     }
 }

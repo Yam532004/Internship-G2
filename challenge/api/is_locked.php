@@ -14,7 +14,7 @@ $table_name = "users";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
-    $isLocked = isset($_POST['is_locked']) ? 1 : 0;
+    $isLocked = isset($_POST['is_locked']) ? 0 : 1;
     // echo isset($_POST['is_locked']) ? 'is_locked exists' : 'is_locked does not exist';
     $stmt = $conn->prepare("UPDATE users SET is_locked = ? WHERE id = ?");
 
