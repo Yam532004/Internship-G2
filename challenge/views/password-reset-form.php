@@ -58,38 +58,23 @@ require_once 'layouts/header.php';
 <script type="text/javascript" src="../assets/javascript/reset-password.js"></script>
 
 <script>
-    var new_password = document.querySelector('#new_password');
-    var toggleNew_password = document.querySelector('#toggleNew_password');
-    toggleNew_password.addEventListener('click', function() {
-        const type = new_password.getAttribute('type') === 'password' ? 'text' : 'password';
-        new_password.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
-
-    })
-
-    var repeat_password = document.querySelector('#repeat_password');
-    var toggleRepeat_password = document.querySelector('#toggleRepeat_password');
-    toggleRepeat_password.addEventListener('click', function() {
-        const type = repeat_password.getAttribute('type') === 'password' ? 'text' : 'password';
-        repeat_password.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
-
-    })
-
-    new_password.addEventListener('input', function() {
-        if (this.getAttribute('type') !== 'password') {
-            this.setAttribute('type', 'password');
-        }
-    });
-
-    repeat_password.addEventListener('input', function() {
-        if (this.getAttribute('type') !== 'password') {
-            this.setAttribute('type', 'password');
-        }
-    });
-    //  rewwrite
-
     document.getElementById('new_password').addEventListener('input', function() {
+        if (this.getAttribute('type') !== 'password') {
+            this.setAttribute('type', 'password');
+        }
+        const newPasswordIcon = document.getElementById('toggleNew_password');
+        newPasswordIcon.classList.remove('fa-eye');
+        newPasswordIcon.classList.add('fa-eye-slash');
+    })
+    document.getElementById('toggleNew_password').addEventListener('click', function() {
+        const newPasswordInput = document.getElementById('new_password');
+        const type = newPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        newPasswordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    })
+
+    document.getElementById('repeat_password').addEventListener('input', function() {
         if (this.getAttribute('type') !== 'password') {
             this.setAttribute('type', 'password');
         }
@@ -97,12 +82,11 @@ require_once 'layouts/header.php';
         newPasswordIcon.classList.remove('fa-eye');
         newPasswordIcon.classList.add('fa-eye-slash');
     })
-    document.getElementById('new_password').addEventListener('click', function() {
-        const newPasswordInput = document.getElementById('new_password');
+    document.getElementById('toggleRepeat_password').addEventListener('click', function() {
+        const newPasswordInput = document.getElementById('repeat_password');
         const type = newPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         newPasswordInput.setAttribute('type', type);
         this.classList.toggle('fa-eye');
         this.classList.toggle('fa-eye-slash');
-
     })
 </script>

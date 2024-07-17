@@ -1,15 +1,4 @@
-
 <?php 
-require 'layouts/header.php';
-session_start();
-require '../vendor/autoload.php';
-
-// Kiểm tra và hiển thị thông báo nếu có
-if (isset($_SESSION['alert'])) {
-    unset($_SESSION['alert']);
-    // Xóa thông báo sau khi đã hiển thị
-    echo $_SESSION['alert'];
-}
 include_once "layouts/navbar.php";
 ?>
 <div class="container mt-2" id="content">

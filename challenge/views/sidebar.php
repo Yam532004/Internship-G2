@@ -1,9 +1,6 @@
 <?php require 'layouts/header.php';
 include '../config/database.php';
 
-// header('Cache-Control: no-cache, no-store, must-revalidate');
-// header('Pragma: no-cache');
-// header('Expires: 0');
 
 $databaseService = new DatabaseService();
 $conn = $databaseService->getConnection();
@@ -12,10 +9,6 @@ $conn = $databaseService->getConnection();
 session_start();
 require '../vendor/autoload.php';
 
-// if (!isset($_SESSION['token'])) {
-//   header('Location: login.php');
-//   exit();
-// } else {
   $email = $_SESSION['email'];
   $user = "SELECT *  FROM users WHERE email = :email";
 
@@ -32,7 +25,6 @@ require '../vendor/autoload.php';
     header('Location: homepage.php');
     exit();
   }
-// }
 ?>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
